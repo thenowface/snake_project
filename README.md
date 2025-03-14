@@ -1,7 +1,7 @@
 # snake_project
 Project L1 Snake
 
-##Identification :
+## Identification :
 Dans ce jeu graphique, les éléments ont 2 types d'identité :
 
     • L'identité par coordonnées :
@@ -15,12 +15,13 @@ Dans ce jeu graphique, les éléments ont 2 types d'identité :
 
 
 
-##Explication : 
+## Explication : 
 Le snake est une liste de dimension n+1
 L'élément 0 est la queue du serpent obtenu grâce à self.objet[0] à la position self.Spos[0] : [x,y]
 L'élément n est la tête du serpent obtenu grâce à self.objet[-1] à la position self.Spos[-1] : [x,y]
 
 Étapes pour faire avancer le serpent : 
+    
     • Ajouter la nouvelle tête :
         - self.Spos.append([x,y]) --> Avec un certain déplacement au voisinnage par 4 avec la variable `dep`
         - self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0],self.Spos[-1][1],plan.px,plan.px,"red"))   
