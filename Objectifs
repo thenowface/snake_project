@@ -1,0 +1,33 @@
+# Objectifs :
+
+- Mettre image sur le corps + images spéciales sur la queue et la tête
+
+- Pion évenement
+  • Pion qui fait augmenter la vitesse pendant x secondes 
+  • Pion qui fait diminuer la vitesse pendant x secondes 
+  • Pion qui fait perdre une queue en plus 
+
+- Mettre de la musique 
+  • Son quand le snake attrape un pion 
+  • Son quand le snake touche un mur/bord
+  • Musique d'ambiance plus ou moins épique 
+    - "Vous avez perdu" par Alain Berro
+    - "Siouplaît" quand le pion accélère 
+
+- Mode autonome
+  • Atteindre des points 
+  • Bloquer le snake joueur
+
+- Interface graphique 
+  • Menu pour selectionner des paramètres
+    - Selection du nombre de carreaux 
+    - Selection du mode (solo / multi / ordi)
+    - Poids du Nombre de points
+    - Poids du Nombre de murs
+    - Vitesse (vitesse normale / vitesse qui évolue)
+
+- Multijoueur 
+  • Compteur pour utiliser des touches différentes
+
+- Comptage des points 
+  • Fichier qui compte les scores : classement par date
