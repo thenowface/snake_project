@@ -3,12 +3,19 @@
 from tkiteasy import *
 import random 
 
-#dante
+
 
 #création de la classe du snake
 class Snake():
     #Compteur de serpent pour utiliser différentes touches 
-    nbS=0
+    nbr_snake=-1
+
+    # Associations de touches pour pouvoir jouer 
+    # Haut, Bas, Gauche, Droite
+    key=[["Up","Down","Left","Right"],
+         ["z","s","q","d"],
+         ["t","g","f","h"]]
+
     def __init__(self,speed=5,size=1):
             #Partie données de position
             self.size=size
@@ -27,6 +34,9 @@ class Snake():
 
             #Partie graphique avec le plan
             self.objet=[plan.g.dessinerRectangle(self.Spos[i][0]*plan.px+1,self.Spos[i][1]*plan.px+1,plan.px-1,plan.px-1,"red") for i in range(len(self.Spos))]
+
+            #On ajoute 1 au nombre de snake 
+            Snake.nbr_snake+=1
             
 
 
@@ -71,11 +81,14 @@ class Snake():
 
             
              
-            jeu=g.recupererTouche()
+            key=g.recupererTouche()
+            #on récupère la touche et on regarde si elle est dans notre liste
+            if key in Snake.key[Snake.nbr_snake]:
+                jeu=key
             #jeu est la touche cliquée
             
-            #haut
-            if jeu=='Up' and self.canMove(self.Spos[-1][0],self.Spos[-1][1]-1):
+            #haut en position 0 dans Snake.key
+            if jeu==Snake.key[Snake.nbr_snake][0] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]-1):
                 
                 
                 #On rajoute la nouvelle tête en coordonnées
@@ -93,14 +106,10 @@ class Snake():
 
                     #On supprime les coordonnées
                     self.Spos=self.Spos[1:]
-
-
-
-
                 # break
                 
-            #bas
-            elif jeu=='Down' and self.canMove(self.Spos[-1][0],self.Spos[-1][1]+1):
+            #bas en position 1 dans Snake.key
+            elif jeu==Snake.key[Snake.nbr_snake][1] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]+1):
                 
                 
                 #On rajoute la nouvelle tête en coordonnées
@@ -121,11 +130,10 @@ class Snake():
                 
                 # break
                 
-            #gauche
-            elif jeu=='Left' and self.canMove(self.Spos[-1][0]-1,self.Spos[-1][1]):
+            #gauche en position 2 dans Snake.key
+            elif jeu==Snake.key[Snake.nbr_snake][2] and self.canMove(self.Spos[-1][0]-1,self.Spos[-1][1]):
                 
-                print(self.Spos)
-                print(self.objet)
+            
                 #On rajoute la nouvelle tête en coordonnées
                 self.Spos.append([self.Spos[-1][0]-1,self.Spos[-1][1]])
                 #On dessine la nouvelle tête
@@ -141,15 +149,12 @@ class Snake():
                     #On supprime les coordonnées
                     self.Spos=self.Spos[1:]
                 
-                print(self.Spos)
-                print(self.objet)
                 break
                 
-            #droite
-            elif jeu=='Right' and self.canMove(self.Spos[-1][0]+1,self.Spos[-1][1]):
+            #droite en position 3 dans Snake.key
+            elif jeu==Snake.key[Snake.nbr_snake][3] and self.canMove(self.Spos[-1][0]+1,self.Spos[-1][1]):
                 
-                print(self.Spos)
-                print(self.objet)
+                
                 #On rajoute la nouvelle tête en coordonnées
                 self.Spos.append([self.Spos[-1][0]+1,self.Spos[-1][1]])
                 #On dessine la nouvelle tête
@@ -164,8 +169,6 @@ class Snake():
                     #On supprime les coordonnées
                     self.Spos=self.Spos[1:]
                 
-                print(self.Spos)
-                print(self.objet)
                 break
 
 
@@ -295,6 +298,8 @@ class Plan():
 
 plan=Plan(60)
 snake=Snake(2)
+snake2=Snake(2,3)
 while True:
     snake.deplaceSnake()
+    snake2.deplaceSnake()
 plan.g.attendreClic()
