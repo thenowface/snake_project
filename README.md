@@ -32,4 +32,18 @@ L'élément n est la tête du serpent obtenu grâce à self.objet[-1] à la posi
         - self.Spos=self.Spos[1:]
         - self.objet=selft.objet[1:]
         - 
+
+## Modification Tkiteasy :
+Nous avons modifié Tkiteasy afin de faire le projet.
+Ci dessous, vous retrouverez des explications quant à ces modifications.
+
+    • Ajout de la musique (lignes 213 à 224) :
+    Nous avons crée de nouvelles fonctions.
+    chargerMusique : cette fonction initialise le mixer et charge le fichier audio qui est mis en paramètre. On utilise les fonctions de pygame mixer.init() et              mixer.music.load()
+    jouerMusique : cette fonction permet de lancer la musique. On a trois paramètres. boucles, le nombre de fois qu'on rejoue la musique (0 on joue la musique une seule     fois); depart, à partir de quand on commence la musique (en secondes); fade,   
+    On utilise la fonction mixer.music.play()
+    Pour plus d'information, on peut consulter la documentation de py
+    
+
+
         
