@@ -3,6 +3,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 from time import sleep
 from PIL import ImageTk, Image
+import pygame
 
 
 ################################################################################
