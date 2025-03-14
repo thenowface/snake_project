@@ -1,4 +1,4 @@
-# snake_project
+# Snake Project
 Project L1 Snake
 
 ## Identification :
