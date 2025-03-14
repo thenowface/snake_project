@@ -208,7 +208,18 @@ class Canevas(tk.Canvas):
         if not ido:
             return None
         return ObjetGraphique.annuaire[self.master][ido[-1]]
+################################################################################
+# AJOUT DE MUSIQUE ET DE SONS AVEC PYGAME
+################################################################################
+    def chargerMusique(self,musiq):
+        pygame.mixer.init()
+        pygame.mixer.music.load(musiq)
 
+    def jouerMusique(self,boucles,depart,fade):
+        pygame.mixer.music.play(loops=boucles,start=depart,fade_ms=fade)
+
+    def rejouerMusique(self):
+        pygame.mixer.music.rewind()
 ################################################################################
 # AUTRES FONCTIONS
 ################################################################################
