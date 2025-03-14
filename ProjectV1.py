@@ -3,7 +3,7 @@
 from tkiteasy import *
 import random 
 
-
+#dante
 
 #création de la classe du snake
 class Snake():
