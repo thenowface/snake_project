@@ -8,7 +8,7 @@ import random
 #création de la classe du snake
 class Snake():
     #Compteur de serpent pour utiliser différentes touches 
-    nbr_snake=-1
+    nbr=-1
 
     # Associations de touches pour pouvoir jouer 
     # Haut, Bas, Gauche, Droite
@@ -16,11 +16,25 @@ class Snake():
          ["z","s","q","d"],
          ["t","g","f","h"]]
 
+
+    #Liste avec toutes les positions des snake généralisée à la classe entière 
+    #-> Utilisation pour un jeu en multijoueur 
+    # allSnake=[]
     def __init__(self,speed=5,size=1):
+            
+            #On ajoute 1 au nombre de snake et on définit le numéro self du snake 
+            Snake.nbr+=1
+            self.nbr_snake=Snake.nbr
+            # Snake.allSnake.append([])
+            
+            #Pour l'instant on joue au maximum avec 3 snake 
+            if Snake.nbr>2:
+                return False
+
             #Partie données de position
             self.size=size
             #Transformation pour renvoyer un résultat en milisecondes qui décroit quand speed augmente
-            self.speed=0.1-(speed/100)
+            self.speed=0.03+0.1-(speed/100)
             
             Sx=random.randint(0,plan.dim-1)
             Sy=random.randint(0,plan.dim-1)
@@ -33,14 +47,17 @@ class Snake():
             self.Spos=[[Sx+i,Sy] for i in range(size)]
 
             #Partie graphique avec le plan
-            self.objet=[plan.g.dessinerRectangle(self.Spos[i][0]*plan.px+1,self.Spos[i][1]*plan.px+1,plan.px-1,plan.px-1,"red") for i in range(len(self.Spos))]
+            self.objet=[plan.g.dessinerRectangle(self.Spos[i][0]*plan.px+1,
+                                                self.Spos[i][1]*plan.px+1,
+                                                plan.px-1,plan.px-1,"red") for i in range(len(self.Spos))]
 
-            #On ajoute 1 au nombre de snake 
-            Snake.nbr_snake+=1
+            #Variable de touche pressée utilisée pour la fonction déplacer
+            self.jeu=None
+
             
 
 
-### Fonction qui renvoie si le joueur peut se déplacer avec x,y les coordonnées du déplacement
+### Fonction renvoie si le joueur peut se déplacer avec x,y les coordonnées du déplacement  -->(Booléen autorisant le déplacement)
     def canMove(self,x,y):
         if (x,y) in plan.mur or [x,y] in self.Spos :
             return False
@@ -51,7 +68,7 @@ class Snake():
         return True
 
 
-### Fonction qui ajoute les bonus 
+### Fonction qui ajoute les bonus -->(Un Booléen pour savoir si on est sur un bonus ou non)
     def isBonus(self):
         if [self.Spos[-1][0],self.Spos[-1][1]] in plan.posB:
 
@@ -64,112 +81,116 @@ class Snake():
  ######### Déplacer le joueur à l'aide des flèches du clavier ##############               
     def deplaceSnake(self):
         g=plan.g
+        # print(Snake.key[self.nbr_snake])
+       
+ 
+        # while True:
+        plan.g.pause(self.speed)
+        key=g.recupererTouche()
+        #on récupère la touche et on regarde si elle est dans notre liste
+        if key in Snake.key[self.nbr_snake]:
+            self.jeu=key
+        #self.jeu est la touche cliquée pour le snake en question
+
+        #haut en position 0 dans Snake.key
+        if self.jeu==Snake.key[self.nbr_snake][0] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]-1):
+            
+            
+            #On rajoute la nouvelle tête en coordonnées
+            self.Spos.append([self.Spos[-1][0],self.Spos[-1][1]-1])
+
+
+            # Snake.allSnake[self.nbr_snake].append([self.Spos[-1][0],self.Spos[-1][1]-1])
+            #On dessine la nouvelle tête
+            self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
+                                                       self.Spos[-1][1]*plan.px+1,
+                                                       plan.px-1,plan.px-1,"red"))
+            
+
+            #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandit
+            
+            if not self.isBonus():
+                #On supprime l'objet
+                g.supprimer(self.objet[0])
+                self.objet=self.objet[1:]
+
+                #On supprime les coordonnées
+                self.Spos=self.Spos[1:]
+
+
+                # Snake.allSnake[self.nbr_snake].remove([self.Spos[-1][0],self.Spos[-1][1]-1])
+            # break
+            
+        #bas
+        elif self.jeu==Snake.key[self.nbr_snake][1] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]+1):
+            
+            
+            #On rajoute la nouvelle tête en coordonnées
+            self.Spos.append([self.Spos[-1][0],self.Spos[-1][1]+1])
+            #On dessine la nouvelle tête
+            self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
+                                                       self.Spos[-1][1]*plan.px+1,
+                                                       plan.px-1,plan.px-1,"red"))
+            
+
+            #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
+            if not self.isBonus():
+                #On supprime l'objet
+                g.supprimer(self.objet[0])
+                self.objet=self.objet[1:]
+
+                #On supprime les coordonnées
+                self.Spos=self.Spos[1:]
+            
+            
+            # break
+            
+        #gauche
+        elif self.jeu==Snake.key[self.nbr_snake][2] and self.canMove(self.Spos[-1][0]-1,self.Spos[-1][1]):
+            
         
-        #Objets message d'erreur
-        carre=None
-        txt=None
-
-        while True:
-            g.pause(self.speed)
-            #Suppression message d'erreur
-            while carre!=None:
-                suite=g.attendreTouche()
-                if suite =="Return":
-                    g.supprimer(carre)
-                    g.supprimer(txt)
-                    break
-
+            #On rajoute la nouvelle tête en coordonnées
+            self.Spos.append([self.Spos[-1][0]-1,self.Spos[-1][1]])
+            #On dessine la nouvelle tête
+            self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
+                                                       self.Spos[-1][1]*plan.px+1,plan.px-1,
+                                                       plan.px-1,"red"))
             
-             
-            key=g.recupererTouche()
-            #on récupère la touche et on regarde si elle est dans notre liste
-            if key in Snake.key[Snake.nbr_snake]:
-                jeu=key
-            #jeu est la touche cliquée
+
+            #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
+            if not self.isBonus():
+                #On supprime l'objet
+                g.supprimer(self.objet[0])
+                self.objet=self.objet[1:]
+
+                #On supprime les coordonnées
+                self.Spos=self.Spos[1:]
             
-            #haut en position 0 dans Snake.key
-            if jeu==Snake.key[Snake.nbr_snake][0] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]-1):
-                
-                
-                #On rajoute la nouvelle tête en coordonnées
-                self.Spos.append([self.Spos[-1][0],self.Spos[-1][1]-1])
-                #On dessine la nouvelle tête
-                self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,self.Spos[-1][1]*plan.px+1,plan.px-1,plan.px-1,"red"))
-                
-
-                #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandit
-                
-                if not self.isBonus():
-                    #On supprime l'objet
-                    g.supprimer(self.objet[0])
-                    self.objet=self.objet[1:]
-
-                    #On supprime les coordonnées
-                    self.Spos=self.Spos[1:]
-                # break
-                
-            #bas en position 1 dans Snake.key
-            elif jeu==Snake.key[Snake.nbr_snake][1] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]+1):
-                
-                
-                #On rajoute la nouvelle tête en coordonnées
-                self.Spos.append([self.Spos[-1][0],self.Spos[-1][1]+1])
-                #On dessine la nouvelle tête
-                self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,self.Spos[-1][1]*plan.px+1,plan.px-1,plan.px-1,"red"))
-                
-
-                #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
-                if not self.isBonus():
-                    #On supprime l'objet
-                    g.supprimer(self.objet[0])
-                    self.objet=self.objet[1:]
-
-                    #On supprime les coordonnées
-                    self.Spos=self.Spos[1:]
-                
-                
-                # break
-                
-            #gauche en position 2 dans Snake.key
-            elif jeu==Snake.key[Snake.nbr_snake][2] and self.canMove(self.Spos[-1][0]-1,self.Spos[-1][1]):
-                
+            # break
             
-                #On rajoute la nouvelle tête en coordonnées
-                self.Spos.append([self.Spos[-1][0]-1,self.Spos[-1][1]])
-                #On dessine la nouvelle tête
-                self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,self.Spos[-1][1]*plan.px+1,plan.px-1,plan.px-1,"red"))
-                
+        #droite
+        elif self.jeu==Snake.key[self.nbr_snake][3] and self.canMove(self.Spos[-1][0]+1,self.Spos[-1][1]):
+            
+            
+            #On rajoute la nouvelle tête en coordonnées
+            self.Spos.append([self.Spos[-1][0]+1,self.Spos[-1][1]])
+            #On dessine la nouvelle tête
+            self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
+                                                       self.Spos[-1][1]*plan.px+1,
+                                                       plan.px-1,plan.px-1,"red"))
+            
+            #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
+            if not self.isBonus():
+                #On supprime l'objet
+                g.supprimer(self.objet[0])
+                self.objet=self.objet[1:]
 
-                #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
-                if not self.isBonus():
-                    #On supprime l'objet
-                    g.supprimer(self.objet[0])
-                    self.objet=self.objet[1:]
+                #On supprime les coordonnées
+                self.Spos=self.Spos[1:]
+            
+            # break
 
-                    #On supprime les coordonnées
-                    self.Spos=self.Spos[1:]
-                
-                break
-                
-            #droite en position 3 dans Snake.key
-            elif jeu==Snake.key[Snake.nbr_snake][3] and self.canMove(self.Spos[-1][0]+1,self.Spos[-1][1]):
-                
-                
-                #On rajoute la nouvelle tête en coordonnées
-                self.Spos.append([self.Spos[-1][0]+1,self.Spos[-1][1]])
-                #On dessine la nouvelle tête
-                self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,self.Spos[-1][1]*plan.px+1,plan.px-1,plan.px-1,"red"))
-                
-                #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
-                if not self.isBonus():
-                    #On supprime l'objet
-                    g.supprimer(self.objet[0])
-                    self.objet=self.objet[1:]
-
-                    #On supprime les coordonnées
-                    self.Spos=self.Spos[1:]
-                
-                break
+        # print(Snake.allSnake)
 
 
 
@@ -206,7 +227,6 @@ class Plan():
         self.dim=dim
         
 
-
         self.g=ouvrirFenetre(self.px*self.dim,self.px*self.dim)
         self.initGraphique()
 
@@ -215,18 +235,15 @@ class Plan():
 
         self.initBonus()
 
-
+    # Procédure qui dessine le plan avec les lignes
     def initGraphique(self):
-        g=self.g
-        dim=self.dim
-        #dim correspond à la dimension on simplifie l'écriture
 
-        for i in range(dim):
-            g.dessinerLigne(i*self.px,0,i*self.px,self.px*dim,"grey")
-            g.dessinerLigne(0,i*self.px,self.px*dim,i*self.px,"grey")
+        for i in range(self.dim):
+            self.g.dessinerLigne(i*self.px,0,i*self.px,self.px*self.dim,"grey")
+            self.g.dessinerLigne(0,i*self.px,self.px*self.dim,i*self.px,"grey")
 
 
-    #Fonction qui affiche les bonus et qui 
+    # Procédure qui déssine les bonus et qui ajoute leur coordonnées au données du plan
     def initBonus(self):
         #Liste de toutes les positions des bonus
         self.posB=[[random.randint(0,self.dim-1),random.randint(0,self.dim-1)] for i in range(self.dim//5)]
@@ -239,11 +256,13 @@ class Plan():
         #On crée les objet graphiques associés aux coordonnées
         self.objBonus=[]
         for item in self.posB:
-            bonus=self.g.dessinerRectangle(self.px*item[0]+1,self.px*item[1]+1,self.px-1,self.px-1,"yellow")
+            bonus=self.g.dessinerRectangle(self.px*item[0]+1,
+                                           self.px*item[1]+1,
+                                           self.px-1,self.px-1,"yellow")
             self.objBonus.append(bonus)
 
 
-
+    # Procédure qui crée les murs de façon random <--(Nombre de murs à dessiner : n)
     def wall(self,n):
         self.mur=[]
         #n correspond au nombre de mur 
@@ -267,7 +286,7 @@ class Plan():
 
 
 
-### Fonction qui supprime et replace les bonus
+### Procédure qui supprime et replace les bonus <-- (position du point mangé + snake concernée) 
 # -->   .pop() prends en paramètre un index et .remove() prends en paramètre un élément
     def moveBonus(self,x,y,idSnake):
         #On supprime le point touché
@@ -279,7 +298,6 @@ class Plan():
         self.objBonus.pop(i)
 
         #On crée de nouvelles coordonnés
-        print(idSnake.Spos)
         while [x,y] in idSnake.Spos or [x,y] in self.posB or (x,y) in self.mur:
             x=random.randint(0,self.dim-1)
             y=random.randint(0,self.dim-1)
@@ -287,7 +305,8 @@ class Plan():
         #On ajoute les nouvelles coordonnées 
         self.posB.append([x,y])
         #On crée un nouvel objet graphique
-        self.objBonus.append(self.g.dessinerRectangle(x*self.px+1,y*self.px+1,self.px-1,self.px-1,"yellow"))
+        self.objBonus.append(self.g.dessinerRectangle(x*self.px+1,y*self.px+1,
+                                                    self.px-1,self.px-1,"yellow"))
 
         
 
@@ -295,11 +314,13 @@ class Plan():
 
 
 
-
-plan=Plan(60)
-snake=Snake(2)
-snake2=Snake(2,3)
+#Possibilité de jouer avec plusieurs joueurs
+plan=Plan(30)
+snake=Snake(4,2)
+# snake2=Snake(7,3)
 while True:
     snake.deplaceSnake()
-    snake2.deplaceSnake()
+    # snake2.deplaceSnake()
 plan.g.attendreClic()
+
+#Est-ce que les serpents peuvent pop au meme endroit ??
