@@ -29,7 +29,9 @@
   • Pouvoir fermer la fenetre
 
 - Multijoueur 
-  • Compteur pour utiliser des touches différentes
+  _• Compteur pour utiliser des touches différentes_
+  • Faire varier la vitesse en fonction du nombre de joueur
+  • regarder si les snake se chevauchent 
 
 - Comptage des points 
   • Fichier qui compte les scores : classement par date
