@@ -19,13 +19,16 @@ class Snake():
 
     #Liste avec toutes les positions des snake généralisée à la classe entière 
     #-> Utilisation pour un jeu en multijoueur 
-    # allSnake=[]
+    allSnake=[]
+
+
+
     def __init__(self,speed=5,size=1):
             
             #On ajoute 1 au nombre de snake et on définit le numéro self du snake 
             Snake.nbr+=1
             self.nbr_snake=Snake.nbr
-            # Snake.allSnake.append([])
+            Snake.allSnake.append([])
             
             #Pour l'instant on joue au maximum avec 3 snake 
             if Snake.nbr>2:
@@ -43,7 +46,7 @@ class Snake():
                     Sx=random.randint(0,plan.dim-1)
                     Sy=random.randint(0,plan.dim-1)
 
-            #Coordonnées du montre
+            #Coordonnées du snake
             self.Spos=[[Sx+i,Sy] for i in range(size)]
 
             #Partie graphique avec le plan
@@ -59,8 +62,11 @@ class Snake():
 
 ### Fonction renvoie si le joueur peut se déplacer avec x,y les coordonnées du déplacement  -->(Booléen autorisant le déplacement)
     def canMove(self,x,y):
-        if (x,y) in plan.mur or [x,y] in self.Spos :
+        if (x,y) in plan.mur  :
             return False
+        for i in range(Snake.nbr+1):
+            if [x,y] in Snake.allSnake[i] :
+                return False
         if x<0 or x>plan.dim-1:
             return False
         if y<0 or y>plan.dim-1:
@@ -73,19 +79,19 @@ class Snake():
         if [self.Spos[-1][0],self.Spos[-1][1]] in plan.posB:
 
             #On lance le programme pour générer un nouveau point
-            plan.moveBonus(self.Spos[-1][0],self.Spos[-1][1],self)
+            plan.moveBonus(self.Spos[-1][0],self.Spos[-1][1])
             return True
         return False
 
 
  ######### Déplacer le joueur à l'aide des flèches du clavier ##############               
     def deplaceSnake(self):
-        g=plan.g
-        # print(Snake.key[self.nbr_snake])
-       
- 
-        # while True:
+        g=plan.g       
+        #Permet de mettre de la vitesse dans le snake
         plan.g.pause(self.speed)
+
+        Snake.allSnake[self.nbr_snake]=self.Spos
+
         key=g.recupererTouche()
         #on récupère la touche et on regarde si elle est dans notre liste
         if key in Snake.key[self.nbr_snake]:
@@ -108,7 +114,7 @@ class Snake():
             
 
             #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandit
-            
+
             if not self.isBonus():
                 #On supprime l'objet
                 g.supprimer(self.objet[0])
@@ -127,6 +133,7 @@ class Snake():
             
             #On rajoute la nouvelle tête en coordonnées
             self.Spos.append([self.Spos[-1][0],self.Spos[-1][1]+1])
+
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,
@@ -151,6 +158,7 @@ class Snake():
         
             #On rajoute la nouvelle tête en coordonnées
             self.Spos.append([self.Spos[-1][0]-1,self.Spos[-1][1]])
+
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,plan.px-1,
@@ -174,6 +182,7 @@ class Snake():
             
             #On rajoute la nouvelle tête en coordonnées
             self.Spos.append([self.Spos[-1][0]+1,self.Spos[-1][1]])
+
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,
@@ -288,17 +297,27 @@ class Plan():
 
 ### Procédure qui supprime et replace les bonus <-- (position du point mangé + snake concernée) 
 # -->   .pop() prends en paramètre un index et .remove() prends en paramètre un élément
-    def moveBonus(self,x,y,idSnake):
+    def moveBonus(self,x,y):
+
         #On supprime le point touché
         i=self.posB.index([x,y])
+
         #Supprime les coordonnées
         self.posB.pop(i)
         #Supprime l'objet
         self.g.supprimer(self.objBonus[i])
         self.objBonus.pop(i)
 
+
+        # On concatene toutes les coordonnées de tous les snake 
+        # pour générer un nv bonus
+        snakeBonus=[]
+        for i in range(Snake.nbr+1):
+            snakeBonus+=Snake.allSnake[i]
+
+
         #On crée de nouvelles coordonnés
-        while [x,y] in idSnake.Spos or [x,y] in self.posB or (x,y) in self.mur:
+        while [x,y] in snakeBonus or [x,y] in self.posB or (x,y) in self.mur:
             x=random.randint(0,self.dim-1)
             y=random.randint(0,self.dim-1)
 
@@ -317,10 +336,9 @@ class Plan():
 #Possibilité de jouer avec plusieurs joueurs
 plan=Plan(30)
 snake=Snake(4,2)
-# snake2=Snake(7,3)
+snake2=Snake(7,3)
 while True:
     snake.deplaceSnake()
-    # snake2.deplaceSnake()
+    snake2.deplaceSnake()
 plan.g.attendreClic()
 
-#Est-ce que les serpents peuvent pop au meme endroit ??
