@@ -39,12 +39,12 @@ class Snake():
             #Transformation pour renvoyer un résultat en milisecondes qui décroit quand speed augmente
             self.speed=0.03+0.1-(speed/100)
             
-            Sx=random.randint(0,plan.dim-1)
-            Sy=random.randint(0,plan.dim-1)
+            Sx=random.randint(size-1,plan.dim-size)
+            Sy=random.randint(size-1,plan.dim-size)
             for i in range(size):
-                while (Sx+i,Sy) in plan.mur :
-                    Sx=random.randint(0,plan.dim-1)
-                    Sy=random.randint(0,plan.dim-1)
+                while (Sx+i,Sy) in plan.mur:
+                    Sx=random.randint(size-1,plan.dim-size)
+                    Sy=random.randint(size-1,plan.dim-size)
 
             #Coordonnées du snake
             self.Spos=[[Sx+i,Sy] for i in range(size)]
@@ -86,7 +86,7 @@ class Snake():
         
             #Ajout des accelerateurs et les ralentisseurs
             #Accelerateur
-            if self.size%4==0: 
+            if self.size%3==0: 
                 plan.initSPoint(2)
             #Ralentisseur
             if self.size%8==0:
