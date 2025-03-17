@@ -80,7 +80,32 @@ class Snake():
 
             #On lance le programme pour générer un nouveau point
             plan.moveBonus(self.Spos[-1][0],self.Spos[-1][1])
+
+            #On augmente la taille du serpent
+            self.size+=1
+        
+            #Ajout des accelerateurs et les ralentisseurs
+            #Accelerateur
+            if self.size%4==0: 
+                plan.initSPoint(2)
+            #Ralentisseur
+            if self.size%8==0:
+                plan.initSPoint(1)
+
             return True
+        
+        # Si le snake passe sur un accélérateur on diminue le temps d'attente
+        elif [self.Spos[-1][0],self.Spos[-1][1]] in plan.pos2:
+            plan.moveSPoint(self.Spos[-1][0],self.Spos[-1][1],2)
+            self.speed-=0.03
+            return False
+        
+        # Si le snake passe sur un ralentisseur on augmente le temps d'attente
+        elif [self.Spos[-1][0],self.Spos[-1][1]] in plan.pos1:
+            plan.moveSPoint(self.Spos[-1][0],self.Spos[-1][1],1)
+            self.speed+=0.03
+            return False
+
         return False
 
 
@@ -244,6 +269,14 @@ class Plan():
 
         self.initBonus()
 
+        #Listes pour les accélérateurs --> notation avec un 2
+        self.pos2=[]
+        self.obj2=[]
+
+        #Listes pour les ralentisseurs --> notation avec un 1
+        self.pos1=[]
+        self.obj1=[]
+
     # Procédure qui dessine le plan avec les lignes
     def initGraphique(self):
 
@@ -328,17 +361,61 @@ class Plan():
                                                     self.px-1,self.px-1,"yellow"))
 
         
+    ## Procédure qui initialise les points spéciaux
+    def initSPoint(self,type):
+        snakeBonus=[]
+        for i in range(Snake.nbr+1):
+            snakeBonus+=Snake.allSnake[i]
+        x=random.randint(0,self.dim-1)
+        y=random.randint(0,self.dim-1)
+        while [x,y] in snakeBonus or [x,y] in self.posB or (x,y) in self.mur:
+            x=random.randint(0,self.dim-1)
+            y=random.randint(0,self.dim-1)
 
+        #Accélérateur en bleu
+        if type==2:
+            self.pos2.append([x,y])
+            self.obj2.append(self.g.dessinerRectangle(x*self.px+1,y*self.px+1,
+                                                    self.px-1,self.px-1,"blue"))
+        #Ralentisseur en vert
+        elif type==1:
+            self.pos1.append([x,y])
+            self.obj1.append(self.g.dessinerRectangle(x*self.px+1,y*self.px+1,
+                                                      self.px-1,self.px-1,"green"))
 
+        
+        
+    def moveSPoint(self,x,y,type):
+        if type==2:
+            #On supprime le point touché
+            i=self.pos2.index([x,y])
+
+            #Supprime les coordonnées
+            self.pos2.pop(i)
+            #Supprime l'objet
+            self.g.supprimer(self.obj2[i])
+            self.obj2.pop(i)
+
+        elif type==1:
+            #On supprime le point touché
+            i=self.pos1.index([x,y])
+
+            #Supprime les coordonnées
+            self.pos1.pop(i)
+            #Supprime l'objet
+            self.g.supprimer(self.obj1[i])
+            self.obj1.pop(i)
+
+        # self.initSPoint(type)
 
 
 
 #Possibilité de jouer avec plusieurs joueurs
 plan=Plan(30)
 snake=Snake(4,2)
-snake2=Snake(7,3)
+# snake2=Snake(7,3)
 while True:
     snake.deplaceSnake()
-    snake2.deplaceSnake()
+    # snake2.deplaceSnake()
 plan.g.attendreClic()
 
