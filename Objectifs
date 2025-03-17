@@ -5,9 +5,8 @@
 - Changer les murs en sets une fois créés
 
 - Pion évenement
-  • Pion qui fait augmenter la vitesse pendant x secondes 
-  • Pion qui fait diminuer la vitesse pendant x secondes 
-  • Pion qui fait perdre une queue en plus 
+  ##• Pion qui fait augmenter la vitesse pendant x secondes##
+  ##• Pion qui fait diminuer la vitesse pendant x secondes##
 
 - Mettre de la musique 
   • Son quand le snake attrape un pion 
