@@ -2,9 +2,9 @@
 
 - Mettre image sur le corps + images spéciales sur la queue et la tête
 
-- Changer les murs en sets une fois créés
+##- Changer les murs en sets une fois créés##
 
-- Pion évenement
+##- Pion évenement##
   ##• Pion qui fait augmenter la vitesse pendant x secondes##
   ##• Pion qui fait diminuer la vitesse pendant x secondes##
 
@@ -23,8 +23,6 @@
   • Menu pour selectionner des paramètres
     - Selection du nombre de carreaux 
     - Selection du mode (solo / multi / ordi)
-    - Poids du Nombre de points
-    - Poids du Nombre de murs
     - Vitesse (vitesse normale / vitesse qui évolue)
     - Sélection de la musique
   • Pouvoir fermer la fenetre
