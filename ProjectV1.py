@@ -57,6 +57,9 @@ class Snake():
             #Variable de touche pressée utilisée pour la fonction déplacer
             self.jeu=None
 
+            #Liste qui comprend si la vitesse est modifiée et depuis combien de déplacements
+            self.isSpeed=[None,0]
+
             
 
 
@@ -76,6 +79,17 @@ class Snake():
 
 ### Fonction qui ajoute les bonus -->(Un Booléen pour savoir si on est sur un bonus ou non)
     def isBonus(self):
+
+        print(self.speed)
+        #Regarde si la vitesse est modifiée 
+        if self.isSpeed[0]!=None:
+            #Rajoute un déplacement de vitesse
+            self.isSpeed[1]+=1
+            #Si on atteint 100 déplacement
+            if self.isSpeed[1]>100:
+                self.speed+=self.isSpeed[0]*0.03
+                self.isSpeed=[None,0]
+
         if [self.Spos[-1][0],self.Spos[-1][1]] in plan.posB:
 
             #On lance le programme pour générer un nouveau point
@@ -92,18 +106,28 @@ class Snake():
             if self.size%8==0:
                 plan.initSPoint(1)
 
+            
+
             return True
         
         # Si le snake passe sur un accélérateur on diminue le temps d'attente
         elif [self.Spos[-1][0],self.Spos[-1][1]] in plan.pos2:
             plan.moveSPoint(self.Spos[-1][0],self.Spos[-1][1],2)
             self.speed-=0.03
+
+            #On rentre le compteur de vitesse -> -1 car pour remettre normalement 
+            # on augmente le temps d'attente
+            self.isSpeed[0]=1
             return False
         
         # Si le snake passe sur un ralentisseur on augmente le temps d'attente
         elif [self.Spos[-1][0],self.Spos[-1][1]] in plan.pos1:
             plan.moveSPoint(self.Spos[-1][0],self.Spos[-1][1],1)
             self.speed+=0.03
+
+            #On rentre le compteur de vitesse -> -1 car pour remettre normalement 
+            # on diminue le temps d'attente
+            self.isSpeed[0]=-1
             return False
 
         return False
@@ -413,7 +437,7 @@ class Plan():
 #Possibilité de jouer avec plusieurs joueurs
 plan=Plan(30)
 snake=Snake(4,2)
-# snake2=Snake(7,3)
+# snake2=Snake(4,2)
 while True:
     snake.deplaceSnake()
     # snake2.deplaceSnake()
