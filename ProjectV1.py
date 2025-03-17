@@ -82,12 +82,12 @@ class Snake():
 
         print(self.speed)
         #Regarde si la vitesse est modifiée 
-        if self.isSpeed[0]!=None:
+        if self.isSpeed[0]==-1:
             #Rajoute un déplacement de vitesse
             self.isSpeed[1]+=1
             #Si on atteint 100 déplacement
             if self.isSpeed[1]>100:
-                self.speed+=self.isSpeed[0]*0.03
+                self.speed+=self.isSpeed[0]*0.02
                 self.isSpeed=[None,0]
 
         if [self.Spos[-1][0],self.Spos[-1][1]] in plan.posB:
@@ -113,7 +113,7 @@ class Snake():
         # Si le snake passe sur un accélérateur on diminue le temps d'attente
         elif [self.Spos[-1][0],self.Spos[-1][1]] in plan.pos2:
             plan.moveSPoint(self.Spos[-1][0],self.Spos[-1][1],2)
-            self.speed-=0.03
+            self.speed-=0.02
 
             #On rentre le compteur de vitesse -> -1 car pour remettre normalement 
             # on augmente le temps d'attente
@@ -286,7 +286,7 @@ class Plan():
         
 
         self.g=ouvrirFenetre(self.px*self.dim,self.px*self.dim)
-        self.initGraphique()
+        #self.initGraphique()
 
         #Liste de toutes les positions des murs
         self.wall(self.dim//3)
