@@ -100,7 +100,7 @@ class Snake():
         
             #Ajout des accelerateurs et les ralentisseurs
             #Accelerateur
-            if self.size%3==0: 
+            if self.size%2==0: 
                 plan.initSPoint(2)
             #Ralentisseur
             if self.size%8==0:
@@ -349,6 +349,9 @@ class Plan():
 
                 #On utilise un tuple pour les murs car ce sont des éléments non mutables
                 self.mur.append((x,y))
+
+        #Conversion en set pour optimiser le programme 
+        self.mur=set(self.mur)
 
 
 
