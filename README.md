@@ -38,11 +38,14 @@ Nous avons modifié Tkiteasy afin de faire le projet.
 Ci dessous, vous retrouverez des explications quant à ces modifications.
 
     • Ajout de la musique (lignes 213 à 224) :
-    Nous avons crée de nouvelles fonctions.
-    chargerMusique : cette fonction initialise le mixer et charge le fichier audio qui est mis en paramètre. On utilise les fonctions de pygame mixer.init() et              mixer.music.load()
-    jouerMusique : cette fonction permet de lancer la musique. On a trois paramètres. boucles, le nombre de fois qu'on rejoue la musique (0 on joue la musique une seule     fois); depart, à partir de quand on commence la musique (en secondes); fade,   
+    Nous avons ajoutée de nouvelles métdodes.
+    chargerMusique : cette méthode initialise le mixer et charge le fichier audio qui est mis en paramètre. On utilise les fonctions de pygame mixer.init() et              mixer.music.load()
+    jouerMusique : cette méthode permet de lancer la musique. On a trois paramètres. boucles, le nombre de fois qu'on rejoue la musique (0 on joue la musique une seule     fois); depart, à partir de quand on commence la musique (en secondes); fade,   
     On utilise la fonction mixer.music.play()
-    Pour plus d'information, on peut consulter la documentation de py
+    rejouerMusique : cette méthode permet de rejouer la musique.
+    Pour plus d'information, on peut consulter la documentation de pygame :
+    https://www.pygame.org/docs/ref/music.html
+    
     
 
 
