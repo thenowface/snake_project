@@ -21,6 +21,14 @@ class Snake():
     #-> Utilisation pour un jeu en multijoueur 
     allSnake=[]
 
+    #Booléen pour savoir si le jeu continue
+    canRun=True
+
+    #Nombres de Snake 
+    deadSnake=-1
+
+    #Images des têtes de snake
+    headSnake=["alain.png","laurent.png"]
 
 
     def __init__(self,speed=5,size=1):
@@ -60,19 +68,28 @@ class Snake():
             #Liste qui comprend si la vitesse est modifiée et depuis combien de déplacements
             self.isSpeed=[None,0]
 
+            self.face=[None,None]
             
 
 
 ### Fonction renvoie si le joueur peut se déplacer avec x,y les coordonnées du déplacement  -->(Booléen autorisant le déplacement)
     def canMove(self,x,y):
         if (x,y) in plan.mur  :
+            if self.jeu!=None:
+                self.supSnake()
             return False
         for i in range(Snake.nbr+1):
             if [x,y] in Snake.allSnake[i] :
+                if self.jeu!=None:
+                    self.supSnake()
                 return False
         if x<0 or x>plan.dim-1:
+            if self.jeu!=None:
+                self.supSnake()
             return False
         if y<0 or y>plan.dim-1:
+            if self.jeu!=None:
+                self.supSnake()
             return False
         return True
 
@@ -80,7 +97,7 @@ class Snake():
 ### Fonction qui ajoute les bonus -->(Un Booléen pour savoir si on est sur un bonus ou non)
     def isBonus(self):
 
-        print(self.speed)
+        # print(self.speed)
         #Regarde si la vitesse est modifiée 
         if self.isSpeed[0]==-1:
             #Rajoute un déplacement de vitesse
@@ -113,7 +130,9 @@ class Snake():
         # Si le snake passe sur un accélérateur on diminue le temps d'attente
         elif [self.Spos[-1][0],self.Spos[-1][1]] in plan.pos2:
             plan.moveSPoint(self.Spos[-1][0],self.Spos[-1][1],2)
-            self.speed-=0.02
+            #Sécurité pour eviter un sleeptime négatif
+            if self.speed-0.02>=0:
+                self.speed-=0.02
 
             #On rentre le compteur de vitesse -> -1 car pour remettre normalement 
             # on augmente le temps d'attente
@@ -133,6 +152,18 @@ class Snake():
         return False
 
 
+
+
+
+
+
+
+
+
+
+
+ ###########################################################################
+ ###########################################################################
  ######### Déplacer le joueur à l'aide des flèches du clavier ##############               
     def deplaceSnake(self):
         g=plan.g       
@@ -198,7 +229,6 @@ class Snake():
                 #On supprime les coordonnées
                 self.Spos=self.Spos[1:]
             
-            
             # break
             
         #gauche
@@ -245,11 +275,43 @@ class Snake():
 
                 #On supprime les coordonnées
                 self.Spos=self.Spos[1:]
+
+        # elif not self.canMove(self.Spos[-1][0]-1,self.Spos[-1][1]) and self.jeu!=None :
+        #     self.supSnake()
             
+            
+
+        if self.face!=[None,None]:
+            plan.g.supprimer(self.face[0])
+            plan.g.supprimer(self.face[1])
+
+        #Programme qui affiche la tête du serpent 
+        if self.Spos!=[]:
+            self.face=[plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,self.Spos[-1][1]*plan.px+1,plan.px-1,plan.px-1,"black"),
+                    plan.g.afficherImage(self.Spos[-1][0]*plan.px,self.Spos[-1][1]*plan.px,Snake.headSnake[self.nbr_snake],int(plan.px),int(plan.px))]
+
             # break
 
         # print(Snake.allSnake)
 
+
+
+
+
+
+    #Procédure qui supprime le snake de manière élégante
+    def supSnake(self):
+        plan.g.pause(0.1)
+        plan.g.supprimer(self.face[0])
+        plan.g.supprimer(self.face[1])
+        self.face=[None,None]
+        for i in range(self.size,0,-1):
+            plan.g.supprimer(self.objet[i-1])
+            plan.g.actualiser()
+            plan.g.pause(0.3)
+        self.objet=[]
+        self.Spos=[]
+        Snake.deadSnake+=1
 
 
 
@@ -301,6 +363,11 @@ class Plan():
         self.pos1=[]
         self.obj1=[]
 
+        #Liste avec les images pour les bonus
+        self.imgB=[]
+
+
+
     # Procédure qui dessine le plan avec les lignes
     def initGraphique(self):
 
@@ -322,10 +389,13 @@ class Plan():
         #On crée les objet graphiques associés aux coordonnées
         self.objBonus=[]
         for item in self.posB:
-            bonus=self.g.dessinerRectangle(self.px*item[0]+1,
-                                           self.px*item[1]+1,
-                                           self.px-1,self.px-1,"yellow")
+            bonus=self.g.afficherImage(item[0]*self.px,item[1]*self.px,"apple_red.png",int(self.px),int(self.px))
             self.objBonus.append(bonus)
+
+        # for x,y in self.posB:
+        #     w=[]
+        #     w.append(self.g.afficherImage(x*self.px,y*self.px,"IMG_4903.png",int(self.px),int(self.px)))
+
 
 
     # Procédure qui crée les murs de façon random <--(Nombre de murs à dessiner : n)
@@ -384,8 +454,7 @@ class Plan():
         #On ajoute les nouvelles coordonnées 
         self.posB.append([x,y])
         #On crée un nouvel objet graphique
-        self.objBonus.append(self.g.dessinerRectangle(x*self.px+1,y*self.px+1,
-                                                    self.px-1,self.px-1,"yellow"))
+        self.objBonus.append(self.g.afficherImage(x*self.px,y*self.px,"apple_red.png",int(self.px),int(self.px)))
 
         
     ## Procédure qui initialise les points spéciaux
@@ -402,8 +471,7 @@ class Plan():
         #Accélérateur en bleu
         if type==2:
             self.pos2.append([x,y])
-            self.obj2.append(self.g.dessinerRectangle(x*self.px+1,y*self.px+1,
-                                                    self.px-1,self.px-1,"blue"))
+            self.obj2.append(self.g.afficherImage(x*self.px,y*self.px,"apple_yellow.png",int(self.px),int(self.px)))
         #Ralentisseur en vert
         elif type==1:
             self.pos1.append([x,y])
@@ -437,12 +505,26 @@ class Plan():
 
 
 
+    def fin(self,idSnake,type):
+        idSnake.supSnake()
+        
+        
+
+
+
+
+
 #Possibilité de jouer avec plusieurs joueurs
-plan=Plan(30)
-snake=Snake(4,2)
-# snake2=Snake(4,2)
-while True:
-    snake.deplaceSnake()
-    # snake2.deplaceSnake()
+plan=Plan(20)
+snake=[Snake(4,2) for _ in range(1)]
+
+vivarium=0
+while Snake.deadSnake!=Snake.nbr:
+    snake[vivarium%len(snake)].deplaceSnake()
+    if snake[vivarium%len(snake)].Spos==[]:
+        snake.remove(snake[vivarium%len(snake)])
+    vivarium+=1
+print("waaaaa")
+
 plan.g.attendreClic()
 
