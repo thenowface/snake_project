@@ -165,16 +165,24 @@ class Snake():
  ###########################################################################
  ###########################################################################
  ######### Déplacer le joueur à l'aide des flèches du clavier ##############               
-    def deplaceSnake(self):
+    def deplaceSnake(self,type=0):
         g=plan.g       
         #Permet de mettre de la vitesse dans le snake
         plan.g.pause(self.speed)
 
         Snake.allSnake[self.nbr_snake]=self.Spos
 
-        key=g.recupererTouche()
+        if type==1:
+            key=g.attendreTouche()
+        else:
+            key=g.recupererTouche()
+         
         #on récupère la touche et on regarde si elle est dans notre liste
-        if key in Snake.key[self.nbr_snake]:
+        # Type 1 pour la fonction blocante
+        if type==1:
+            self.jeu=key
+
+        elif key in Snake.key[self.nbr_snake]:
             self.jeu=key
         #self.jeu est la touche cliquée pour le snake en question
 
@@ -301,14 +309,14 @@ class Snake():
 
     #Procédure qui supprime le snake de manière élégante
     def supSnake(self):
-        plan.g.pause(0.1)
+        plan.g.pause(0.12)
         plan.g.supprimer(self.face[0])
         plan.g.supprimer(self.face[1])
         self.face=[None,None]
         for i in range(self.size,0,-1):
             plan.g.supprimer(self.objet[i-1])
             plan.g.actualiser()
-            plan.g.pause(0.3)
+            plan.g.pause(0.1)
         self.objet=[]
         self.Spos=[]
         Snake.deadSnake+=1
@@ -468,15 +476,14 @@ class Plan():
             x=random.randint(0,self.dim-1)
             y=random.randint(0,self.dim-1)
 
-        #Accélérateur en bleu
+        #Accélérateur en pomme jaune
         if type==2:
             self.pos2.append([x,y])
             self.obj2.append(self.g.afficherImage(x*self.px,y*self.px,"apple_yellow.png",int(self.px),int(self.px)))
-        #Ralentisseur en vert
+        #Ralentisseur en pomme de terre empoisonnée 
         elif type==1:
             self.pos1.append([x,y])
-            self.obj1.append(self.g.dessinerRectangle(x*self.px+1,y*self.px+1,
-                                                      self.px-1,self.px-1,"green"))
+            self.obj1.append(self.g.afficherImage(x*self.px,y*self.px,"poison.png",int(self.px),int(self.px)))
 
         
         
@@ -516,15 +523,15 @@ class Plan():
 
 #Possibilité de jouer avec plusieurs joueurs
 plan=Plan(20)
-snake=[Snake(4,2) for _ in range(1)]
+snake=[Snake(2,5) for _ in range(1)]
 
+#Compteur pour passer par tous les snakes
 vivarium=0
 while Snake.deadSnake!=Snake.nbr:
     snake[vivarium%len(snake)].deplaceSnake()
     if snake[vivarium%len(snake)].Spos==[]:
         snake.remove(snake[vivarium%len(snake)])
     vivarium+=1
-print("waaaaa")
 
 plan.g.attendreClic()
 
