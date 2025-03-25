@@ -14,8 +14,8 @@ def menu():
 
     #choix des carreaux
     Label(fenetre, text="Taille des carreaux", font=("Helvetica", 14), fg="white", bg="black").pack()
-    ListCar = ["20", "40", "60"]
-    varCar = StringVar(fenetre)
+    ListCar = ["30", "40", "50"]
+    varCar = IntVar(fenetre)
     varCar.set(ListCar[0])
     car = OptionMenu(fenetre, varCar, *ListCar)
     car.config(width=30, font=("Helvetica", 12))
@@ -30,6 +30,8 @@ def menu():
     mu.config(width=30, font=("Helvetica", 12))
     mu.pack(pady=10)
 
+
+
     #choix du mode de jeu
     Label(fenetre, text="Mode de jeu", font=("Helvetica", 14), fg="white", bg="black").pack()
     ListMo = ["Solo", "Multijoueur"]
@@ -39,7 +41,7 @@ def menu():
     mo.config(width=30, font=("Helvetica", 12))
     mo.pack(pady=10)
 
-    varNB = StringVar(fenetre)
+    varNB = IntVar(fenetre)
 
     #frame pour IA ou joueurs (permet de les afficher/supprimer facilement)
     frame_options = Frame(fenetre, bg="black")
@@ -53,18 +55,26 @@ def menu():
 
         if varMo.get() == "Solo":
             Label(frame_options, text="Nombre d'IA", font=("Helvetica", 14), fg="white", bg="black").pack()
-            ListIA = ["1", "2", "3", "4", "5"]
+            ListIA = ["0","1", "2", "3", "4", "5"]
             varNB.set(ListIA[0])
             ia = OptionMenu(frame_options, varNB, *ListIA)
             ia.config(width=30, font=("Helvetica", 12))
             ia.pack(pady=10)
         else:
             Label(frame_options, text="Nombre de joueurs", font=("Helvetica", 14), fg="white", bg="black").pack()
-            ListJp = ["1", "2", "3", "4"]
+            ListJp = ["1", "2", "3"]
             varNB.set(ListJp[0])
             jp = OptionMenu(frame_options, varNB, *ListJp)
             jp.config(width=30, font=("Helvetica", 12))
             jp.pack(pady=10)
+
+
+    #Choix de la vitesse
+    Label(fenetre, text="Vitesse du snake", font=("Helvetica", 14), fg="white", bg="black").pack()
+    varSpeed = IntVar(fenetre)
+    Scala2 = Scale(fenetre, from_=1, to=8, length = 250,tickinterval = 1, orient=HORIZONTAL, sliderlength = 15, variable=varSpeed)
+    Scala2.pack(padx=5, pady=5)
+
 
     #renvoie du nombre de joueurs
 
@@ -75,6 +85,6 @@ def menu():
     #Lancement de la fenêtre
     fenetre.mainloop()
 
-    return varCar.get(), varMu.get(), varMo.get(), varNB.get()
+    return varCar.get(), varMu.get(), varMo.get(), varNB.get(), varSpeed.get()
 
 print(menu())
