@@ -61,6 +61,7 @@ def menu():
             ia.config(width=30, font=("Helvetica", 12))
             ia.pack(pady=10)
         else:
+            #renvoie du nombre de joueurs
             Label(frame_options, text="Nombre de joueurs", font=("Helvetica", 14), fg="white", bg="black").pack()
             ListJp = ["1", "2", "3"]
             varNB.set(ListJp[0])
@@ -75,8 +76,12 @@ def menu():
     Scala2 = Scale(fenetre, from_=1, to=8, length = 250,tickinterval = 1, orient=HORIZONTAL, sliderlength = 15, variable=varSpeed)
     Scala2.pack(padx=5, pady=5)
 
+    #Bouton de fermeture
+    def fermer():
+        fenetre.destroy()
+    close=Button(fenetre,text="Lancer le Jeu",font=("Helvetica", 14),command=fermer,bg="black")
 
-    #renvoie du nombre de joueurs
+    close.pack(padx=5, pady=50)
 
     #Lier la fonction à tout changement de mode de jeu
     nombre = varMo.trace("w", update_options)
@@ -87,4 +92,4 @@ def menu():
 
     return varCar.get(), varMu.get(), varMo.get(), varNB.get(), varSpeed.get()
 
-print(menu())
+# print(menu())
