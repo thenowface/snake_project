@@ -2,6 +2,7 @@
 
 from tkiteasy import *
 import random 
+import menubeta
 
 
 
@@ -29,6 +30,8 @@ class Snake():
 
     #Images des têtes de snake
     headSnake=["alain.png","laurent.png"]
+
+    jeu=[]
 
 
     def __init__(self,speed=5,size=1):
@@ -63,7 +66,7 @@ class Snake():
                                                 plan.px-1,plan.px-1,"red") for i in range(len(self.Spos))]
 
             #Variable de touche pressée utilisée pour la fonction déplacer
-            self.jeu=None
+            Snake.jeu.append(None)
 
             #Liste qui comprend si la vitesse est modifiée et depuis combien de déplacements
             self.isSpeed=[None,0]
@@ -172,22 +175,29 @@ class Snake():
 
         Snake.allSnake[self.nbr_snake]=self.Spos
 
+        # Type 1 pour la fonction bloquante
         if type==1:
             key=g.attendreTouche()
         else:
             key=g.recupererTouche()
+
          
         #on récupère la touche et on regarde si elle est dans notre liste
         # Type 1 pour la fonction blocante
         if type==1:
-            self.jeu=key
+            Snake.jeu[self.nbr_snake]=key
 
-        elif key in Snake.key[self.nbr_snake]:
-            self.jeu=key
+        else:
+            for i in range(Snake.nbr+1):
+                if key in Snake.key[i]:
+                    Snake.jeu[i]=key
         #self.jeu est la touche cliquée pour le snake en question
 
+        print(f"snake : {self.nbr_snake} key :{key}, jeu : {self.jeu}")
+
+
         #haut en position 0 dans Snake.key
-        if self.jeu==Snake.key[self.nbr_snake][0] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]-1):
+        if Snake.jeu[self.nbr_snake]==Snake.key[self.nbr_snake][0] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]-1):
             
             
             #On rajoute la nouvelle tête en coordonnées
@@ -213,10 +223,9 @@ class Snake():
 
 
                 # Snake.allSnake[self.nbr_snake].remove([self.Spos[-1][0],self.Spos[-1][1]-1])
-            # break
             
         #bas
-        elif self.jeu==Snake.key[self.nbr_snake][1] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]+1):
+        elif Snake.jeu[self.nbr_snake]==Snake.key[self.nbr_snake][1] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]+1):
             
             
             #On rajoute la nouvelle tête en coordonnées
@@ -237,10 +246,10 @@ class Snake():
                 #On supprime les coordonnées
                 self.Spos=self.Spos[1:]
             
-            # break
+        
             
         #gauche
-        elif self.jeu==Snake.key[self.nbr_snake][2] and self.canMove(self.Spos[-1][0]-1,self.Spos[-1][1]):
+        elif Snake.jeu[self.nbr_snake]==Snake.key[self.nbr_snake][2] and self.canMove(self.Spos[-1][0]-1,self.Spos[-1][1]):
             
         
             #On rajoute la nouvelle tête en coordonnées
@@ -261,10 +270,10 @@ class Snake():
                 #On supprime les coordonnées
                 self.Spos=self.Spos[1:]
             
-            # break
+         
             
         #droite
-        elif self.jeu==Snake.key[self.nbr_snake][3] and self.canMove(self.Spos[-1][0]+1,self.Spos[-1][1]):
+        elif Snake.jeu[self.nbr_snake]==Snake.key[self.nbr_snake][3] and self.canMove(self.Spos[-1][0]+1,self.Spos[-1][1]):
             
             
             #On rajoute la nouvelle tête en coordonnées
@@ -284,10 +293,7 @@ class Snake():
                 #On supprime les coordonnées
                 self.Spos=self.Spos[1:]
 
-        # elif not self.canMove(self.Spos[-1][0]-1,self.Spos[-1][1]) and self.jeu!=None :
-        #     self.supSnake()
-            
-            
+      
 
         if self.face!=[None,None]:
             plan.g.supprimer(self.face[0])
@@ -298,7 +304,7 @@ class Snake():
             self.face=[plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,self.Spos[-1][1]*plan.px+1,plan.px-1,plan.px-1,"black"),
                     plan.g.afficherImage(self.Spos[-1][0]*plan.px,self.Spos[-1][1]*plan.px,Snake.headSnake[self.nbr_snake],int(plan.px),int(plan.px))]
 
-            # break
+
 
         # print(Snake.allSnake)
 
@@ -510,20 +516,22 @@ class Plan():
 
         # self.initSPoint(type)
 
-
-
-    def fin(self,idSnake,type):
-        idSnake.supSnake()
         
         
 
 
 
 
+dim,song,mode,nbr,speed=menubeta.menu()
+
+# ia est le nombre d'ia et nbr est le nombre de joueur solo
+if mode=="Solo":
+    ia=nbr
+    nbr=1
 
 #Possibilité de jouer avec plusieurs joueurs
-plan=Plan(20)
-snake=[Snake(2,5) for _ in range(1)]
+plan=Plan(dim)
+snake=[Snake(speed,size=5) for _ in range(nbr)]
 
 #Compteur pour passer par tous les snakes
 vivarium=0
@@ -532,6 +540,10 @@ while Snake.deadSnake!=Snake.nbr:
     if snake[vivarium%len(snake)].Spos==[]:
         snake.remove(snake[vivarium%len(snake)])
     vivarium+=1
+plan.g.pause(1)
+plan.g.fermerFenetre()
+# plan.g.attendreClic()
 
-plan.g.attendreClic()
 
+#Faire un bouton pour quitter 
+#Renvoyer un int pour la fonction varCar.get() et pour la fonction varNB.get()
