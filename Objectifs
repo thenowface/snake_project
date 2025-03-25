@@ -1,7 +1,5 @@
 # Objectifs :
 
-- Mettre image sur le corps + images spéciales sur la queue et la tête
-
 ##- Changer les murs en sets une fois créés##
 
 ##- Pion évenement##
@@ -21,17 +19,16 @@
   • Bloquer le snake joueur
 
 - Interface graphique 
-  • Menu pour selectionner des paramètres
-    - Selection du nombre de carreaux 
-    - Selection du mode (solo / multi / ordi)
-    - Vitesse (vitesse normale / vitesse qui évolue)
-    - Sélection de la musique
-  • Pouvoir fermer la fenetre
-  • Voir comment selectionner un fichier de murs 
+  ##• Menu pour selectionner des paramètres##
+    ##- Selection du nombre de carreaux## 
+    ##- Selection du mode (solo / multi / ordi)##
+    ##- Vitesse (vitesse normale / vitesse qui évolue)##
+    ##- Sélection de la musique##
+  ??? • Voir comment selectionner un fichier de murs 
 
-- Multijoueur 
+##- Multijoueur##
   ##• Compteur pour utiliser des touches différentes##
-  • Faire varier la vitesse en fonction du nombre de joueur
+  ##• Faire varier la vitesse en fonction du nombre de joueur##
   ##• regarder si les snake se chevauchent##
   ##• Fonction qui fait mourir le serpent##
     ##- Faire mourir petit à petit##
