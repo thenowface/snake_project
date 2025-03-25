@@ -5,15 +5,15 @@ def menu():
     fenetre = Tk()
     fenetre.title("Snake Project")
     fenetre.iconbitmap("grand_devoreur.ico")
-    fenetre.config(bg="black")
+    fenetre.config()
     fenetre.geometry("800x600")
 
     #titre du jeu
-    titre = Label(fenetre, text="SNAKE", font=("Helvetica", 50, "bold"), fg="green", bg="black")
+    titre = Label(fenetre, text="SNAKE", font=("Helvetica", 50, "bold"), fg="green")
     titre.pack(pady=20)
 
     #choix des carreaux
-    Label(fenetre, text="Taille des carreaux", font=("Helvetica", 14), fg="white", bg="black").pack()
+    Label(fenetre, text="Taille des carreaux", font=("Helvetica", 14), fg="white").pack()
     ListCar = ["30", "40", "50"]
     varCar = IntVar(fenetre)
     varCar.set(ListCar[0])
@@ -22,7 +22,7 @@ def menu():
     car.pack(pady=10)
 
     #choix de la musique
-    Label(fenetre, text="Musique", font=("Helvetica", 14), fg="white", bg="black").pack()
+    Label(fenetre, text="Musique", font=("Helvetica", 14), fg="white").pack()
     ListMu = ["Ninjago saison 5", "Geometry Dash"]
     varMu = StringVar(fenetre)
     varMu.set(ListMu[0])
@@ -33,7 +33,7 @@ def menu():
 
 
     #choix du mode de jeu
-    Label(fenetre, text="Mode de jeu", font=("Helvetica", 14), fg="white", bg="black").pack()
+    Label(fenetre, text="Mode de jeu", font=("Helvetica", 14), fg="white").pack()
     ListMo = ["Solo", "Multijoueur"]
     varMo = StringVar(fenetre)
     varMo.set(ListMo[0])
@@ -44,7 +44,7 @@ def menu():
     varNB = IntVar(fenetre)
 
     #frame pour IA ou joueurs (permet de les afficher/supprimer facilement)
-    frame_options = Frame(fenetre, bg="black")
+    frame_options = Frame(fenetre)
     frame_options.pack()
 
     #Fonction pour afficher dynamiquement l'option correcte
@@ -54,7 +54,7 @@ def menu():
             widget.destroy()
 
         if varMo.get() == "Solo":
-            Label(frame_options, text="Nombre d'IA", font=("Helvetica", 14), fg="white", bg="black").pack()
+            Label(frame_options, text="Nombre d'IA", font=("Helvetica", 14), fg="white").pack()
             ListIA = ["0","1", "2", "3", "4", "5"]
             varNB.set(ListIA[0])
             ia = OptionMenu(frame_options, varNB, *ListIA)
@@ -62,8 +62,8 @@ def menu():
             ia.pack(pady=10)
         else:
             #renvoie du nombre de joueurs
-            Label(frame_options, text="Nombre de joueurs", font=("Helvetica", 14), fg="white", bg="black").pack()
-            ListJp = ["1", "2", "3"]
+            Label(frame_options, text="Nombre de joueurs", font=("Helvetica", 14), fg="white").pack()
+            ListJp = ["2", "3"]
             varNB.set(ListJp[0])
             jp = OptionMenu(frame_options, varNB, *ListJp)
             jp.config(width=30, font=("Helvetica", 12))
@@ -71,17 +71,17 @@ def menu():
 
 
     #Choix de la vitesse
-    Label(fenetre, text="Vitesse du snake", font=("Helvetica", 14), fg="white", bg="black").pack()
+    Label(fenetre, text="Vitesse du snake", font=("Helvetica", 14), fg="white").pack()
     varSpeed = IntVar(fenetre)
     Scala2 = Scale(fenetre, from_=1, to=8, length = 250,tickinterval = 1, orient=HORIZONTAL, sliderlength = 15, variable=varSpeed)
-    Scala2.pack(padx=5, pady=5)
+    Scala2.pack(padx=5)
 
     #Bouton de fermeture
     def fermer():
         fenetre.destroy()
-    close=Button(fenetre,text="Lancer le Jeu",font=("Helvetica", 14),command=fermer,bg="black")
+    close=Button(fenetre,text="Lancer le Jeu",font=("Helvetica", 14),command=fermer)
 
-    close.pack(padx=5, pady=50)
+    close.pack(padx=0, pady=50)
 
     #Lier la fonction à tout changement de mode de jeu
     nombre = varMo.trace("w", update_options)
@@ -92,4 +92,4 @@ def menu():
 
     return varCar.get(), varMu.get(), varMo.get(), varNB.get(), varSpeed.get()
 
-# print(menu())
+print(menu())
