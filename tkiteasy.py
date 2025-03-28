@@ -173,7 +173,8 @@ class Canevas(tk.Canvas):
         self.master.focus_force()
         self.update()
         touche = self.lastkey
-        self.lastkey = None
+        #Suppression de cette ligne afin de garder en mémoire la derniere touche
+        # self.lastkey = None
         return touche
 
     def attendreTouche(self):
