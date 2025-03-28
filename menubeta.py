@@ -1,11 +1,16 @@
 from tkinter import *
 from tkinter import messagebox
+import pygame.mixer
 
 def menu():
+    #initialisation et lancement de la musique
+    pygame.mixer.init()
+    pygame.mixer.music.load("Fortnite.ogg")
+    pygame.mixer.music.play(loops=-1, start=0, fade_ms=5)
     #création de la fenêtre principale
     fenetre = Tk()
     fenetre.title("Snake Project")
-    fenetre.iconbitmap("grand_devoreur.ico")
+    # fenetre.iconbitmap("grand_devoreur.ico")
     fenetre.config()
     fenetre.geometry("800x700")
 
@@ -97,6 +102,7 @@ def menu():
     #Bouton de fermeture
     def fermer():
         closing[0]=[True]
+        pygame.mixer.music.stop()
         fenetre.destroy()
 
     close=Button(fenetre,text="Quitter le Jeu",font=("Helvetica", 14),command=fermer)
@@ -110,19 +116,18 @@ def menu():
     #Lancement de la fenêtre
     fenetre.mainloop()
 
-
     if not closing[0] :
         return varCar.get(), varMu.get(), varMo.get(), varNB.get(), varSpeed.get(), varBloc.get()
     else:
         messagebox.showinfo(message="Merci d'avoir joué au Snake \n\n À BIENTÔT ;)")
 
 
-
-
-
-
 def end(number_size):
     name=["Alain Berro","Laurent Marsan","Bénédicte Alziary"]
+    #initialisation et lancement de la musique de fin
+    pygame.mixer.init()
+    pygame.mixer.music.load("game_over.ogg")
+    pygame.mixer.music.play(loops=-1, start=0, fade_ms=1)
     #création de la fenêtre principale
     finish = Tk()
     finish.title("Snake Project")
@@ -146,6 +151,7 @@ def end(number_size):
     def finit(value):
         varJeu[0]=value
         finish.destroy()
+        pygame.mixer.music.stop()
         if not value:
             messagebox.showinfo(message="Merci d'avoir joué au Snake \n\n À BIENTÔT ;)")
         
@@ -160,5 +166,5 @@ def end(number_size):
 
     return varJeu[0]
 
-print(menu())
+#print(menu())
 # print(end([5,6]))
