@@ -5,7 +5,7 @@ def menu():
     #création de la fenêtre principale
     fenetre = Tk()
     fenetre.title("Snake Project")
-    # fenetre.iconbitmap("grand_devoreur.ico")
+    fenetre.iconbitmap("grand_devoreur.ico")
     fenetre.config()
     fenetre.geometry("800x700")
 
