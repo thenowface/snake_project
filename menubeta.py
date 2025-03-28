@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 def menu():
     #création de la fenêtre principale
@@ -6,7 +7,7 @@ def menu():
     fenetre.title("Snake Project")
     # fenetre.iconbitmap("grand_devoreur.ico")
     fenetre.config()
-    fenetre.geometry("800x650")
+    fenetre.geometry("800x700")
 
     #titre du jeu
     titre = Label(fenetre, text="SNAKE", font=("Helvetica", 50, "bold"), fg="green")
@@ -14,9 +15,9 @@ def menu():
 
     #choix des carreaux
     Label(fenetre, text="Taille des carreaux", font=("Helvetica", 14), fg="white").pack()
-    ListCar = ["30", "40", "50"]
+    ListCar = ["20","30", "40", "50"]
     varCar = IntVar(fenetre)
-    varCar.set(ListCar[0])
+    varCar.set(ListCar[1])
     car = OptionMenu(fenetre, varCar, *ListCar)
     car.config(width=30, font=("Helvetica", 12))
     car.pack(pady=10)
@@ -42,6 +43,8 @@ def menu():
     mo.pack(pady=10)
 
     varNB = IntVar(fenetre)
+    varBloc = IntVar()
+
 
     #frame pour IA ou joueurs (permet de les afficher/supprimer facilement)
     frame_options = Frame(fenetre)
@@ -54,12 +57,20 @@ def menu():
             widget.destroy()
 
         if varMo.get() == "Solo":
-            Label(frame_options, text="Nombre d'IA", font=("Helvetica", 14), fg="white").pack()
-            ListIA = ["0","1", "2", "3", "4", "5"]
-            varNB.set(ListIA[0])
-            ia = OptionMenu(frame_options, varNB, *ListIA)
-            ia.config(width=30, font=("Helvetica", 12))
-            ia.pack(pady=10)
+
+            #Fonction bloquante
+            bloc = Checkbutton(frame_options, text="Fonction bloquante", variable=varBloc,command=update_options)
+            bloc.pack(pady=20)
+
+            if varBloc.get()==0:
+                Label(frame_options, text="Nombre d'IA", font=("Helvetica", 14), fg="white").pack()
+                ListIA = ["0","1", "2", "3", "4", "5"]
+                varNB.set(ListIA[0])
+                ia = OptionMenu(frame_options, varNB, *ListIA)
+                ia.config(width=30, font=("Helvetica", 12))
+                ia.pack(pady=10)
+
+
         else:
             #renvoie du nombre de joueurs
             Label(frame_options, text="Nombre de joueurs", font=("Helvetica", 14), fg="white").pack()
@@ -77,9 +88,8 @@ def menu():
     Scala2.pack(padx=5)
 
     #Bouton de lancement
-    def lancer():
-        fenetre.destroy()
-    start=Button(fenetre,text="Lancer le Jeu",font=("Helvetica", 14),command=lancer)
+
+    start=Button(fenetre,text="Lancer le Jeu",font=("Helvetica", 14),command=fenetre.destroy)
     start.pack(padx=0, pady=40)
 
 
@@ -100,8 +110,11 @@ def menu():
     #Lancement de la fenêtre
     fenetre.mainloop()
 
+
     if not closing[0] :
-        return varCar.get(), varMu.get(), varMo.get(), varNB.get(), varSpeed.get()
+        return varCar.get(), varMu.get(), varMo.get(), varNB.get(), varSpeed.get(), varBloc.get()
+    else:
+        messagebox.showinfo(message="Merci d'avoir joué au Snake \n\n À BIENTÔT ;)")
 
 
 
@@ -133,6 +146,9 @@ def end(number_size):
     def finit(value):
         varJeu[0]=value
         finish.destroy()
+        if not value:
+            messagebox.showinfo(message="Merci d'avoir joué au Snake \n\n À BIENTÔT ;)")
+        
     
     #Bouton pour recommencer
     Button(finish, text='Relancer le jeu',command=lambda *args: finit(True)).pack(pady=50)
@@ -144,5 +160,5 @@ def end(number_size):
 
     return varJeu[0]
 
-# print(menu())
+print(menu())
 # print(end([5,6]))
