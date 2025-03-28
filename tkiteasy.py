@@ -174,7 +174,7 @@ class Canevas(tk.Canvas):
         self.update()
         touche = self.lastkey
         #Suppression de cette ligne afin de garder en mémoire la derniere touche
-        # self.lastkey = None
+        self.lastkey = None
         return touche
 
     def attendreTouche(self):
@@ -245,7 +245,7 @@ def ouvrirFenetre(x=400, y=200):
     else:
         racine = tk.Toplevel()
     
-    #racine.protocol("WM_DELETE_WINDOW", qtk.quad.master.destroy)
+    # racine.protocol("WM_DELETE_WINDOW", qtk.quad.master.destroy)
     g = Canevas(racine, x, y)
 #     tk.mainloop()
     return g
