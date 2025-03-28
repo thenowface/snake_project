@@ -517,9 +517,6 @@ class Plan():
 
         # self.initSPoint(type)
 
-    def musique(self,musique):  #fonction pour jouer de la musique, on importe les fonctions de tkiteasy que nous avons rajoutés
-        self.g.chargerMusique(musique)
-        self.g.jouerMusique(-1, 0, 0)  
         
 
 
@@ -558,7 +555,7 @@ def game():
 
     #Compteur pour passer par tous les snakes
     vivarium=0
-    plan.musique(song + ".ogg")  #on appelle la fonction pour mettre de la musique, on rajoute .ogg afin que le fichier soit lu.
+    plan.g.jouerMusique(song + ".ogg",0,0,0)  #on appelle la fonction pour mettre de la musique, on rajoute .ogg afin que le fichier soit lu.
     while Snake.deadSnake!=Snake.nbr:
         snake[vivarium%len(snake)].deplaceSnake(block)
         if snake[vivarium%len(snake)].Spos==[]:
@@ -572,7 +569,7 @@ def game():
         vivarium+=1
     plan.g.pause(0.7)
     
-
+    plan.g.stopMusique()
     plan.g.fermerFenetre()
 
     #Remise à zéro de la fenetre tkiteasy
