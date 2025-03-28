@@ -3,7 +3,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 from time import sleep
 from PIL import ImageTk, Image
-import pygame
+import pygame.mixer
 
 
 ################################################################################
@@ -173,8 +173,8 @@ class Canevas(tk.Canvas):
         self.master.focus_force()
         self.update()
         touche = self.lastkey
-        #Suppression de cette ligne afin de garder en mémoire la derniere touche
-        self.lastkey = None
+        # La touche ne se remet pas à None pour permettre de garder la dernière touche appuyée
+        #self.lastkey = None
         return touche
 
     def attendreTouche(self):
@@ -212,15 +212,36 @@ class Canevas(tk.Canvas):
 ################################################################################
 # AJOUT DE MUSIQUE ET DE SONS AVEC PYGAME
 ################################################################################
-    def chargerMusique(self,musiq):
-        pygame.mixer.init()
-        pygame.mixer.music.load(musiq)
 
-    def jouerMusique(self,boucles,depart,fade):
+    #Ici, on s'occupe la musique
+
+    def jouerMusique(self,musique,boucles,depart,fade):
+        pygame.mixer.init()
+        pygame.mixer.music.load(musique)
         pygame.mixer.music.play(loops=boucles,start=depart,fade_ms=fade)
 
     def rejouerMusique(self):
         pygame.mixer.music.rewind()
+
+    def stopMusique(self):
+        pygame.mixer.music.stop()
+
+    def pauseMusique(self):
+        pygame.mixer.music.pause()
+
+    def unpauseMusique(self):
+        pygame.mixer.music.unpause()
+
+    def tempsMusique(self):
+        pygame.mixer.music.get_pos()
+
+    #Par là, on gère les sons
+
+    def jouerSon(self, son, boucles, maxtime, fade):
+        son = pygame.mixer.Sound(son)
+        son.play(loops=boucles, maxtime=maxtime, fade_ms=fade)
+
+
 ################################################################################
 # AUTRES FONCTIONS
 ################################################################################
@@ -245,7 +266,7 @@ def ouvrirFenetre(x=400, y=200):
     else:
         racine = tk.Toplevel()
     
-    # racine.protocol("WM_DELETE_WINDOW", qtk.quad.master.destroy)
+    #racine.protocol("WM_DELETE_WINDOW", qtk.quad.master.destroy)
     g = Canevas(racine, x, y)
 #     tk.mainloop()
     return g
