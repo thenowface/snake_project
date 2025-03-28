@@ -4,9 +4,9 @@ def menu():
     #création de la fenêtre principale
     fenetre = Tk()
     fenetre.title("Snake Project")
-    fenetre.iconbitmap("grand_devoreur.ico")
+    # fenetre.iconbitmap("grand_devoreur.ico")
     fenetre.config()
-    fenetre.geometry("800x600")
+    fenetre.geometry("800x650")
 
     #titre du jeu
     titre = Label(fenetre, text="SNAKE", font=("Helvetica", 50, "bold"), fg="green")
@@ -76,12 +76,22 @@ def menu():
     Scala2 = Scale(fenetre, from_=1, to=8, length = 250,tickinterval = 1, orient=HORIZONTAL, sliderlength = 15, variable=varSpeed)
     Scala2.pack(padx=5)
 
+    #Bouton de lancement
+    def lancer():
+        fenetre.destroy()
+    start=Button(fenetre,text="Lancer le Jeu",font=("Helvetica", 14),command=lancer)
+    start.pack(padx=0, pady=40)
+
+
+    closing=[False]
     #Bouton de fermeture
     def fermer():
+        closing[0]=[True]
         fenetre.destroy()
-    close=Button(fenetre,text="Lancer le Jeu",font=("Helvetica", 14),command=fermer)
 
-    close.pack(padx=0, pady=50)
+    close=Button(fenetre,text="Quitter le Jeu",font=("Helvetica", 14),command=fermer)
+    close.pack(padx=0, pady=0)
+
 
     #Lier la fonction à tout changement de mode de jeu
     nombre = varMo.trace("w", update_options)
@@ -90,6 +100,49 @@ def menu():
     #Lancement de la fenêtre
     fenetre.mainloop()
 
-    return varCar.get(), varMu.get(), varMo.get(), varNB.get(), varSpeed.get()
+    if not closing[0] :
+        return varCar.get(), varMu.get(), varMo.get(), varNB.get(), varSpeed.get()
 
-print(menu())
+
+
+
+
+
+def end(number_size):
+    name=["Alain Berro","Laurent Marsan","Bénédicte Alziary"]
+    #création de la fenêtre principale
+    finish = Tk()
+    finish.title("Snake Project")
+    # fenetre.iconbitmap("grand_devoreur.ico")
+    finish.config()
+    finish.geometry("800x600")
+
+    #titre du jeu
+    titre = Label(finish, text="* Jeu Perdu *", font=("Helvetica", 60, "bold"), fg="red")
+    titre.pack(pady=20)
+
+    titre2 = Label(finish, text="Voici les scores :", font=("Helvetica", 30, "bold"), fg="green")
+    titre2.pack(pady=5)
+
+    result=[Label(finish, text=f"Le Snake {name[i]} est de taille {number_size[i]}", font=("Helvetica", 14), fg="white") for i in range(len(number_size))]
+    for i in range(len(number_size)):
+        result[i].pack(pady=10)
+
+    varJeu=[0]
+
+    def finit(value):
+        varJeu[0]=value
+        finish.destroy()
+    
+    #Bouton pour recommencer
+    Button(finish, text='Relancer le jeu',command=lambda *args: finit(True)).pack(pady=50)
+
+    #Bouton pour finir le jeu 
+    Button(finish, text='Finir le jeu',command=lambda *args: finit(False)).pack(pady=50)
+
+    finish.mainloop()
+
+    return varJeu[0]
+
+# print(menu())
+# print(end([5,6]))
