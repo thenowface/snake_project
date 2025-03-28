@@ -241,7 +241,6 @@ class Canevas(tk.Canvas):
         son = pygame.mixer.Sound(son)
         son.play(loops=boucles, maxtime=maxtime, fade_ms=fade)
 
-
 ################################################################################
 # AUTRES FONCTIONS
 ################################################################################
@@ -257,6 +256,10 @@ class Canevas(tk.Canvas):
     def error(self,msg):
         print(f"Tkiteasy: {msg}")
 
+# méthode rajoutée afin de pouvoir afficher une icone et un titre à la fenêtre
+    def icone_titre(self,icone,titre):
+        self.master.iconbitmap(icone)
+        self.master.title(titre)
 
 
 def ouvrirFenetre(x=400, y=200):
