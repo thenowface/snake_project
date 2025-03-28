@@ -24,7 +24,7 @@ def menu():
 
     #choix de la musique
     Label(fenetre, text="Musique", font=("Helvetica", 14), fg="white").pack()
-    ListMu = ["Ninjago saison 5", "Geometry Dash"]
+    ListMu = ["Ninjago", "Geometry Dash"]
     varMu = StringVar(fenetre)
     varMu.set(ListMu[0])
     mu = OptionMenu(fenetre, varMu, *ListMu)
