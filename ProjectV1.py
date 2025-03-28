@@ -167,7 +167,7 @@ class Snake():
  ###########################################################################
  ###########################################################################
  ######### Déplacer le joueur à l'aide des flèches du clavier ##############               
-    def deplaceSnake(self,type=0):
+    def deplaceSnake(self,type):
         g=plan.g       
         #Permet de mettre de la vitesse dans le snake
         plan.g.pause(self.speed)
@@ -289,7 +289,6 @@ class Snake():
 
                 #On supprime les coordonnées
                 self.Spos=self.Spos[1:]
-
       
 
         if self.face!=[None,None]:
@@ -537,8 +536,8 @@ class Plan():
 def game():
     global plan
     
-    dim,song,mode,nbr,speed=menubeta.menu()
-    print("\n menu ok ")
+    dim,song,mode,nbr,speed,block=menubeta.menu()
+    # print("\n menu ok ")
 
     # ia est le nombre d'ia et nbr est le nombre de joueur solo
     if mode=="Solo":
@@ -548,40 +547,40 @@ def game():
     print(Snake.nbr)
 
     plan=Plan(dim)
-    print("\n plan ok")
+    # print("\n plan ok")
 
     snake=[Snake(speed,size=5) for _ in range(nbr)]
-    print("\n snake ok")
+    # print("\n snake ok")
 
 
     number_size=[1 for _ in range(nbr)]
-    print(f"number size :{number_size}")
+    # print(f"number size :{number_size}")
 
     #Compteur pour passer par tous les snakes
     vivarium=0
     while Snake.deadSnake!=Snake.nbr:
-        snake[vivarium%len(snake)].deplaceSnake()
+        snake[vivarium%len(snake)].deplaceSnake(block)
         if snake[vivarium%len(snake)].Spos==[]:
 
-            print("\n snake mort")
-            print(f"\nvivarium : {vivarium},len : {len(snake)}")
-            print(f"\nLe snake {vivarium%len(snake)} -> {snake[vivarium%len(snake)].size}")
-            
+            # print("\n snake mort")
+            # print(f"\nvivarium : {vivarium},len : {len(snake)}")
+            # print(f"\nLe snake {vivarium%len(snake)} -> {snake[vivarium%len(snake)].size}")
+
             number_size[snake[vivarium%len(snake)].nbr_snake]=snake[vivarium%len(snake)].size
             snake.remove(snake[vivarium%len(snake)])
         vivarium+=1
-    plan.g.pause(1)
+    plan.g.pause(0.7)
+    
+
     plan.g.fermerFenetre()
-    # plan=None
+
+    #Remise à zéro de la fenetre tkiteasy
+    Canevas.racine=None
+
 
     if menubeta.end(number_size):
        game()
 
-    plan.g.fermerFenetre()
-
-    # else:
-    #     plan.g.fermerFenetre()
-    # plan.g.attendreClic()
 
 
 
