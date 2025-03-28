@@ -29,7 +29,7 @@ class Snake():
     deadSnake=-1
 
     #Images des têtes de snake
-    headSnake=["alain.png","laurent.png"]
+    headSnake=["alain.png","laurent.png","benedicte.jpg"]
 
     jeu=[]
 
@@ -63,7 +63,7 @@ class Snake():
             #Partie graphique avec le plan
             self.objet=[plan.g.dessinerRectangle(self.Spos[i][0]*plan.px+1,
                                                 self.Spos[i][1]*plan.px+1,
-                                                plan.px-1,plan.px-1,"red") for i in range(len(self.Spos))]
+                                                plan.px-1,plan.px-1,"green") for i in range(len(self.Spos))]
 
             #Variable de touche pressée utilisée pour la fonction déplacer
             Snake.jeu.append(None)
@@ -100,7 +100,6 @@ class Snake():
 ### Fonction qui ajoute les bonus -->(Un Booléen pour savoir si on est sur un bonus ou non)
     def isBonus(self):
 
-        # print(self.speed)
         #Regarde si la vitesse est modifiée 
         if self.isSpeed[0]==-1:
             #Rajoute un déplacement de vitesse
@@ -193,8 +192,6 @@ class Snake():
                     Snake.jeu[i]=key
         #self.jeu est la touche cliquée pour le snake en question
 
-        print(f"snake : {self.nbr_snake} key :{key}, jeu : {self.jeu}")
-
 
         #haut en position 0 dans Snake.key
         if Snake.jeu[self.nbr_snake]==Snake.key[self.nbr_snake][0] and self.canMove(self.Spos[-1][0],self.Spos[-1][1]-1):
@@ -208,7 +205,7 @@ class Snake():
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,
-                                                       plan.px-1,plan.px-1,"red"))
+                                                       plan.px-1,plan.px-1,"green"))
             
 
             #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandit
@@ -234,7 +231,7 @@ class Snake():
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,
-                                                       plan.px-1,plan.px-1,"red"))
+                                                       plan.px-1,plan.px-1,"green"))
             
 
             #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
@@ -258,7 +255,7 @@ class Snake():
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,plan.px-1,
-                                                       plan.px-1,"red"))
+                                                       plan.px-1,"green"))
             
 
             #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
@@ -282,7 +279,7 @@ class Snake():
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,
-                                                       plan.px-1,plan.px-1,"red"))
+                                                       plan.px-1,plan.px-1,"green"))
             
             #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
             if not self.isBonus():
@@ -306,7 +303,6 @@ class Snake():
 
 
 
-        # print(Snake.allSnake)
 
 
 
@@ -380,6 +376,12 @@ class Plan():
         #Liste avec les images pour les bonus
         self.imgB=[]
 
+        #Initialisation du nombre de Snake
+        Snake.nbr=-1
+        Snake.allSnake=[]
+        Snake.deadSnake=-1
+        Snake.jeu=[]
+        Snake.canRun=True
 
 
     # Procédure qui dessine le plan avec les lignes
@@ -522,28 +524,65 @@ class Plan():
 
 
 
-dim,song,mode,nbr,speed=menubeta.menu()
+# dim,song,mode,nbr,speed=menubeta.menu()
 
-# ia est le nombre d'ia et nbr est le nombre de joueur solo
-if mode=="Solo":
-    ia=nbr
-    nbr=1
+# # ia est le nombre d'ia et nbr est le nombre de joueur solo
+# if mode=="Solo":
+#     ia=nbr
+#     nbr=1
 
-#Possibilité de jouer avec plusieurs joueurs
-plan=Plan(dim)
-snake=[Snake(speed,size=5) for _ in range(nbr)]
+# #Possibilité de jouer avec plusieurs joueurs
+# plan=Plan(dim)
 
-#Compteur pour passer par tous les snakes
-vivarium=0
-while Snake.deadSnake!=Snake.nbr:
-    snake[vivarium%len(snake)].deplaceSnake()
-    if snake[vivarium%len(snake)].Spos==[]:
-        snake.remove(snake[vivarium%len(snake)])
-    vivarium+=1
-plan.g.pause(1)
-plan.g.fermerFenetre()
-# plan.g.attendreClic()
+def game():
+    global plan
+    
+    dim,song,mode,nbr,speed=menubeta.menu()
+    print("\n menu ok ")
+
+    # ia est le nombre d'ia et nbr est le nombre de joueur solo
+    if mode=="Solo":
+        ia=nbr
+        nbr=1
+
+    print(Snake.nbr)
+
+    plan=Plan(dim)
+    print("\n plan ok")
+
+    snake=[Snake(speed,size=5) for _ in range(nbr)]
+    print("\n snake ok")
 
 
-#Faire un bouton pour quitter 
-#Renvoyer un int pour la fonction varCar.get() et pour la fonction varNB.get()
+    number_size=[1 for _ in range(nbr)]
+    print(f"number size :{number_size}")
+
+    #Compteur pour passer par tous les snakes
+    vivarium=0
+    while Snake.deadSnake!=Snake.nbr:
+        snake[vivarium%len(snake)].deplaceSnake()
+        if snake[vivarium%len(snake)].Spos==[]:
+
+            print("\n snake mort")
+            print(f"\nvivarium : {vivarium},len : {len(snake)}")
+            print(f"\nLe snake {vivarium%len(snake)} -> {snake[vivarium%len(snake)].size}")
+            
+            number_size[snake[vivarium%len(snake)].nbr_snake]=snake[vivarium%len(snake)].size
+            snake.remove(snake[vivarium%len(snake)])
+        vivarium+=1
+    plan.g.pause(1)
+    plan.g.fermerFenetre()
+    # plan=None
+
+    if menubeta.end(number_size):
+       game()
+
+    plan.g.fermerFenetre()
+
+    # else:
+    #     plan.g.fermerFenetre()
+    # plan.g.attendreClic()
+
+
+
+game()
