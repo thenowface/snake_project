@@ -516,7 +516,6 @@ class Plan():
             self.obj1.pop(i)
 
         # self.initSPoint(type)
-
         
 
 
@@ -532,7 +531,7 @@ class Plan():
 
 def game():
     global plan
-    
+
     dim,song,mode,nbr,speed,block=menubeta.menu()
     # print("\n menu ok ")
 
@@ -545,6 +544,8 @@ def game():
 
     plan=Plan(dim)
     # print("\n plan ok")
+    #cette méthode permet d'afficher l'icone et le titre de la fenêtre
+    plan.g.icone_titre("grand_devoreur.ico","Snake")
 
     snake=[Snake(speed,size=5) for _ in range(nbr)]
     # print("\n snake ok")
