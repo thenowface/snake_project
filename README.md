@@ -37,7 +37,7 @@ L'élément n est la tête du serpent obtenu grâce à self.objet[-1] à la posi
 Nous avons modifié Tkiteasy afin de faire le projet.
 Ci dessous, vous retrouverez des explications quant à ces modifications.
 
-    • Ajout de la musique (lignes 213 à 242) :
+    • Ajout de la musique et du son (lignes 213 à 242) :
     Nous avons ajoutée de nouvelles métdodes à l'aide de Pygame. Nous créons une méthode qui appelle elle même une fonction de Pygame.Plus précisément, nous utilisons
     le mixer de Pygame. Le mixer de Pygame est un module permettant de gérer le son et la musique, incluant la lecture, le mixage et le contrôle du volume des fichiers
     audio. Ci dessous, nous faisons une liste des méthodes que nous avons créés.
@@ -55,9 +55,20 @@ Ci dessous, vous retrouverez des explications quant à ces modifications.
     la musique de fond.
         Paramètres :
         => son : le son que l'on beut jouer
-        
+        => boucles : nombre de répétitions du son.
+        => maxtime : temps maximal de lecture en millisecondes
+        => fade : durée du fondu d’entrée en millisecondes.
+
     Pour plus d'information, on peut consulter la documentation de pygame :
-    https://www.pygame.org/docs/ref/music.html
+    https://www.pygame.org/docs/ref/mixer.html
+    
+    • Ajout d'une icone et d'un titre pour la fenêtre (lignes 257 à 259) :
+    icone_titre(icone,titre) : méthode qui permet de mettre une icone et un titre à la fenêtre de jeu
+        Paramètres :
+        => icone : fichier de l'image que l'on veut mettre (en format .ico)
+        => titre : le titre de la fenêtre
+
+    
     
     
 
