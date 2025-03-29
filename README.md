@@ -121,22 +121,20 @@ le mode est "Multijoueur", aucune IA n'est présente, et les joueurs sont ajout�
 • Création du plan de jeu :
 Un objet Plan est créé avec la dimension du terrain, et le titre et l'icône de la fenêtre sont définis à l'aide de la méthode icone_titre().
 
-    • Création des serpents :
-    Les serpents des joueurs (en nombre défini par nbr) et des IA (en nombre défini par ia) sont créés et stockés dans des listes respectives. Chaque serpent reçoit
-    une vitesse et une taille initiale.
+• Création des serpents :
+Les serpents des joueurs (en nombre défini par nbr) et des IA (en nombre défini par ia) sont créés et stockés dans des listes respectives. Chaque serpent reçoit    une vitesse et une taille initiale.
 
-    • Musique de fond :
-    La musique du jeu est lancée à l'aide de la méthode jouerMusique(), où le fichier de musique est sélectionné dynamiquement en fonction de la sélection dans le menu.
+• Musique de fond :
+La musique du jeu est lancée à l'aide de la méthode jouerMusique(), où le fichier de musique est sélectionné dynamiquement en fonction de la sélection dans le menu.
 
-    • Boucle de jeu principale :
-    La boucle while len(snake) != 0: gère l'évolution du jeu, où chaque serpent se déplace à chaque itération. Si un serpent meurt (sa position devient vide), il est
-    retiré de la liste snake. Si des IA sont présentes, elles se déplacent également, et si une IA meurt, elle est retirée de la liste snakeIA. Le compteur vivarium
-    assure que chaque serpent ou IA se déplace à chaque tour.
+• Boucle de jeu principale :
+La boucle while len(snake) != 0: gère l'évolution du jeu, où chaque serpent se déplace à chaque itération. Si un serpent meurt (sa position devient vide), il est
+retiré de la liste snake. Si des IA sont présentes, elles se déplacent également, et si une IA meurt, elle est retirée de la liste snakeIA. Le compteur vivarium
+assure que chaque serpent ou IA se déplace à chaque tour.
 
-    • Fin de la partie :
-    Lorsque tous les serpents sont morts, la musique est stoppé et le jeu se termine avec la fermeture de la fenêtre. Si la fonction menubeta.end() renvoie
-    True, la fonction game() est appelée à nouveau pour relancer une nouvelle partie.
-
+• Fin de la partie :
+Lorsque tous les serpents sont morts, la musique est stoppé et le jeu se termine avec la fermeture de la fenêtre. Si la fonction menubeta.end() renvoie
+True, la fonction game() est appelée à nouveau pour relancer une nouvelle partie.
 
 ## Menus
 Nous avons créé deux menus.
