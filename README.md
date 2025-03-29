@@ -47,6 +47,15 @@ L'élément n est la tête du serpent obtenu grâce à self.objet[-1] à la posi
         - self.Spos=self.Spos[1:]
         - self.objet=selft.objet[1:]
         - 
+	
+    • méthode canMove(x,y) : 
+    La méthode canMove(self, x, y) vérifie si le serpent peut se déplacer vers la position (x, y). Elle effectue les vérifications suivantes :
+    => Si (x, y) se trouve dans un mur (plan.mur), le mouvement est impossible.
+    => Si la position est occupée par un autre serpent ( Snake.allSnake[i]), le mouvement est également interdit.
+    => Si les coordonnées sont en dehors des limites du plan, le serpent ne peut pas se déplacer.
+    
+    Si l'une de ces conditions est remplie, la méthode appelle self.supSnake() pour supprimer le serpent du jeu (si ce n'est pas une IA) et retourne False. Sinon, elle
+    retourne True, autorisant le mouvement.
 
 ## Fonction game
 La fonction game() gère le déroulement du jeu, en créant et en initialisant les éléments nécessaires à la partie, puis en exécutant une boucle de jeu jusqu'à ce que toutes les conditions de fin de partie soient remplies.
