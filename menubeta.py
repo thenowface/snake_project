@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import pygame.mixer
 
+
 def menu():
     #initialisation et lancement de la musique
     pygame.mixer.init()
@@ -69,7 +70,7 @@ def menu():
 
             if varBloc.get()==0:
                 Label(frame_options, text="Nombre d'IA", font=("Helvetica", 14), fg="white").pack()
-                ListIA = ["0","1", "2", "3", "4", "5"]
+                ListIA = ["0","1", "2"]
                 varNB.set(ListIA[0])
                 ia = OptionMenu(frame_options, varNB, *ListIA)
                 ia.config(width=30, font=("Helvetica", 12))
@@ -116,10 +117,15 @@ def menu():
     #Lancement de la fenêtre
     fenetre.mainloop()
 
+
     if not closing[0] :
         return varCar.get(), varMu.get(), varMo.get(), varNB.get(), varSpeed.get(), varBloc.get()
     else:
         messagebox.showinfo(message="Merci d'avoir joué au Snake \n\n À BIENTÔT ;)")
+
+
+
+
 
 
 def end(number_size):
@@ -166,5 +172,5 @@ def end(number_size):
 
     return varJeu[0]
 
-#print(menu())
+# print(menu())
 # print(end([5,6]))
