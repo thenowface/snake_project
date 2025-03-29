@@ -34,8 +34,11 @@ class Snake():
     jeu=[]
 
 
-    def __init__(self,speed=5,size=1):
+    def __init__(self,speed=5,size=1,isIA=False):
             
+            #Est-ce que le serpent est une IA
+            self.isIA=isIA
+
             #On ajoute 1 au nombre de snake et on définit le numéro self du snake 
             Snake.nbr+=1
             self.nbr_snake=Snake.nbr
@@ -49,6 +52,12 @@ class Snake():
             self.size=size
             #Transformation pour renvoyer un résultat en milisecondes qui décroit quand speed augmente
             self.speed=0.03+0.1-(speed/100)
+
+            #Couleur vert pour serpent rouge pour IA
+            if isIA :
+                self.color="red"
+            else:
+                self.color="green"
             
             Sx=random.randint(size-1,plan.dim-size)
             Sy=random.randint(size-1,plan.dim-size)
@@ -63,7 +72,7 @@ class Snake():
             #Partie graphique avec le plan
             self.objet=[plan.g.dessinerRectangle(self.Spos[i][0]*plan.px+1,
                                                 self.Spos[i][1]*plan.px+1,
-                                                plan.px-1,plan.px-1,"green") for i in range(len(self.Spos))]
+                                                plan.px-1,plan.px-1,self.color) for i in range(len(self.Spos))]
 
             #Variable de touche pressée utilisée pour la fonction déplacer
             Snake.jeu.append(None)
@@ -78,20 +87,20 @@ class Snake():
 ### Fonction renvoie si le joueur peut se déplacer avec x,y les coordonnées du déplacement  -->(Booléen autorisant le déplacement)
     def canMove(self,x,y):
         if (x,y) in plan.mur  :
-            if self.jeu!=None:
+            if self.jeu!=None and not self.isIA:
                 self.supSnake()
             return False
         for i in range(Snake.nbr+1):
             if [x,y] in Snake.allSnake[i] :
-                if self.jeu!=None:
+                if self.jeu!=None and not self.isIA:
                     self.supSnake()
                 return False
         if x<0 or x>plan.dim-1:
-            if self.jeu!=None:
+            if self.jeu!=None and not self.isIA:
                 self.supSnake()
             return False
         if y<0 or y>plan.dim-1:
-            if self.jeu!=None:
+            if self.jeu!=None and not self.isIA:
                 self.supSnake()
             return False
         return True
@@ -152,9 +161,78 @@ class Snake():
             return False
 
         return False
+    
+
+    #Fonction qui renvoie le bonus le plus proche sx,sy position de la tete du snake bx,by position des bonus
+    def closestBonus(self,sx,sy):
+        #Coordonnées du bonus le plus proche
+        x,y=plan.posB[0]
+        dist=abs(x-sx)+abs(y-sy)
+        
+        for bx,by in plan.posB:
+            if (abs(bx-sx)+abs(by-sy))<dist:
+                x=bx
+                y=by
+
+        return x,y
 
 
+    #Procédure qui crée le mouvement à faire
+    def moveIA(self,sx,sy):
+        bx,by=self.closestBonus(sx,sy)
 
+        #Déplacement par rapport au bonus
+        depx,depy=bx-sx,by-sy
+        print(f"\npos : {self.Spos[-1]}")
+        print(f"\nsx = {sx}       sy = {sy}")
+        print(f"\ndepx = {depx}       depy = {depy}")
+        print(f"\n Haut : {self.canMove(sx,sy-1)}       Bas : {self.canMove(sx,sy+1)}")
+        print(f"Gauche : {self.canMove(sx-1,sy)}       Droite : {self.canMove(sx+1,sy)}")
+
+        if not True in [self.canMove(sx,sy-1),self.canMove(sx,sy+1),self.canMove(sx-1,sy),self.canMove(sx+1,sy)]:
+            self.supSnake()
+
+        
+
+        #Si la distance en y est plus grande on la réduit et on regarde si le monstre n'est pas sur le joueur
+        if  abs(depy)>= abs(depx) and (depx,depy)!=(0,0):
+
+            #Si il faut monter
+            if depy<0 and self.canMove(sx,sy-1) :
+                Snake.jeu[self.nbr_snake]=Snake.key[self.nbr_snake][0]
+            
+            #Sinon on descend 
+            elif depy>=0 and self.canMove(sx,sy+1):
+                Snake.jeu[self.nbr_snake]=Snake.key[self.nbr_snake][1]
+
+            #Gauche
+            elif self.canMove(sx-1,sy):
+                Snake.jeu[self.nbr_snake]=Snake.key[self.nbr_snake][2]
+
+            #Aléatoire
+            else:
+                Snake.jeu[self.nbr_snake]=Snake.key[self.nbr_snake][random.randint(0,3)]
+               
+        
+        #Si la distance en x est plus grande on la réduit
+        elif abs(depy)< abs(depx) and (depx,depy)!=(0,0):
+            #Gauche
+            if depx<0 and self.canMove(sx-1,sy):
+                Snake.jeu[self.nbr_snake]=Snake.key[self.nbr_snake][2]
+            #Droite
+            elif depx >=0 and self.canMove(sx+1,sy):
+                Snake.jeu[self.nbr_snake]=Snake.key[self.nbr_snake][3]
+
+            #Haut
+            elif self.canMove(sx,sy-1):
+                Snake.jeu[self.nbr_snake]=Snake.key[self.nbr_snake][0]
+
+            #Aléatoire
+            else:
+                Snake.jeu[self.nbr_snake]=Snake.key[self.nbr_snake][random.randint(0,3)]
+
+
+        print(f"\n Déplacement : {Snake.jeu[self.nbr_snake]}")
 
 
 
@@ -174,23 +252,27 @@ class Snake():
 
         Snake.allSnake[self.nbr_snake]=self.Spos
 
-        # Type 1 pour la fonction bloquante
-        if type==1:
-            key=g.attendreTouche()
-        else:
-            key=g.recupererTouche()
+        if not self.isIA:
+            # Type 1 pour la fonction bloquante
+            if type==1:
+                key=g.attendreTouche()
+            else:
+                key=g.recupererTouche()
 
-         
-        #on récupère la touche et on regarde si elle est dans notre liste
-        # Type 1 pour la fonction blocante
-        if type==1:
-            Snake.jeu[self.nbr_snake]=key
+            
+            #on récupère la touche et on regarde si elle est dans notre liste
+            # Type 1 pour la fonction blocante
+            if type==1:
+                Snake.jeu[self.nbr_snake]=key
 
-        else:
-            for i in range(Snake.nbr+1):
-                if key in Snake.key[i]:
-                    Snake.jeu[i]=key
-        #self.jeu est la touche cliquée pour le snake en question
+            else:
+                for i in range(Snake.nbr+1):
+                    if key in Snake.key[i]:
+                        Snake.jeu[i]=key
+            #self.jeu est la touche cliquée pour le snake en question
+        else: 
+            self.moveIA(self.Spos[-1][0],self.Spos[-1][1])
+ 
 
 
         #haut en position 0 dans Snake.key
@@ -205,7 +287,7 @@ class Snake():
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,
-                                                       plan.px-1,plan.px-1,"green"))
+                                                       plan.px-1,plan.px-1,self.color))
             
 
             #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandit
@@ -231,7 +313,7 @@ class Snake():
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,
-                                                       plan.px-1,plan.px-1,"green"))
+                                                       plan.px-1,plan.px-1,self.color))
             
 
             #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
@@ -255,7 +337,7 @@ class Snake():
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,plan.px-1,
-                                                       plan.px-1,"green"))
+                                                       plan.px-1,self.color))
             
 
             #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
@@ -279,7 +361,7 @@ class Snake():
             #On dessine la nouvelle tête
             self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0]*plan.px+1,
                                                        self.Spos[-1][1]*plan.px+1,
-                                                       plan.px-1,plan.px-1,"green"))
+                                                       plan.px-1,plan.px-1,self.color))
             
             #Si on ne se trouve pas sur un bonus on supprime la queue sinon on la laisse -> Comme si le serpent s'agrandi
             if not self.isBonus():
@@ -516,22 +598,24 @@ class Plan():
             self.obj1.pop(i)
 
         # self.initSPoint(type)
+
         
+        
+ 
 
 
-# dim,song,mode,nbr,speed=menubeta.menu()
 
-# # ia est le nombre d'ia et nbr est le nombre de joueur solo
-# if mode=="Solo":
-#     ia=nbr
-#     nbr=1
 
-# #Possibilité de jouer avec plusieurs joueurs
-# plan=Plan(dim)
+
+
+
+###########################################################################
+###########################################################################
+######### Déplacer le joueur à l'aide des flèches du clavier ############## 
 
 def game():
     global plan
-
+    
     dim,song,mode,nbr,speed,block=menubeta.menu()
     # print("\n menu ok ")
 
@@ -539,34 +623,63 @@ def game():
     if mode=="Solo":
         ia=nbr
         nbr=1
+    else:
+        ia=0
 
     print(Snake.nbr)
 
     plan=Plan(dim)
-    # print("\n plan ok")
+    print("\n plan ok")
+
     #cette méthode permet d'afficher l'icone et le titre de la fenêtre
     plan.g.icone_titre("grand_devoreur.ico","Snake")
 
-    snake=[Snake(speed,size=5) for _ in range(nbr)]
-    # print("\n snake ok")
+    snake=[Snake(speed,size=3) for _ in range(nbr)]
+    snakeIA=[Snake(speed,isIA=True) for _ in range(ia)]
+
+    print("\n snake ok")
 
 
     number_size=[1 for _ in range(nbr)]
-    # print(f"number size :{number_size}")
+    print(f"number size :{number_size}")
 
     #Compteur pour passer par tous les snakes
     vivarium=0
-    plan.g.jouerMusique(song + ".ogg",0,0,0)  #on appelle la fonction pour mettre de la musique, on rajoute .ogg afin que le fichier soit lu.
-    while Snake.deadSnake!=Snake.nbr:
-        snake[vivarium%len(snake)].deplaceSnake(block)
-        if snake[vivarium%len(snake)].Spos==[]:
+
+    # on appelle la fonction pour mettre de la musique
+    # on rajoute .ogg afin que le fichier soit lu.
+    plan.g.jouerMusique(song + ".ogg",0,0,0)  
+
+
+    while len(snake)!=0:
+
+        #itération de snake
+        num_ID=vivarium%len(snake)
+
+
+
+        snake[num_ID].deplaceSnake(block)
+
+        if snake[num_ID].Spos==[]:
 
             # print("\n snake mort")
             # print(f"\nvivarium : {vivarium},len : {len(snake)}")
-            # print(f"\nLe snake {vivarium%len(snake)} -> {snake[vivarium%len(snake)].size}")
+            # print(f"\nLe snake {vivarium%len(snake)} -> --> {snake[vivarium%len(snake)].size}")
 
-            number_size[snake[vivarium%len(snake)].nbr_snake]=snake[vivarium%len(snake)].size
-            snake.remove(snake[vivarium%len(snake)])
+            number_size[snake[num_ID].nbr_snake]=snake[num_ID].size
+            snake.pop(num_ID)
+
+        #itération d'IA
+        if ia!=0:
+            num_IA=vivarium%len(snakeIA)
+
+            snakeIA[num_IA].deplaceSnake(block)
+
+            if snakeIA[num_IA].Spos==[]:
+                snakeIA.pop(num_IA)
+        
+
+
         vivarium+=1
     plan.g.pause(0.7)
     
@@ -584,3 +697,6 @@ def game():
 
 
 game()
+
+
+#Ajouter l'ia a la liste des snake et l'exclure de len(snake)
