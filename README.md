@@ -1,4 +1,4 @@
-# Snake Project
+	# Snake Project
 Project L1 Snake
 
 Dans le cadre du projet de fin de semestre de la matière Algorithmique 2 de la double licence Économie-Miashs de TSE, enseignée par Laurent Marsan, nous avons du recréer un jeu snake amélioré, comprenant par exemple des murs et des bonus...
@@ -13,7 +13,13 @@ Ce jeu est composé de 3 fichiers :
   - Utilisation de la base [tkiteasy](https://github.com/LaurentMarsan/tkiteasy) produite par [@LaurentMarsan](https://github.com/LaurentMarsan/)
   - Modification multiples. 
 
+## Menus
+Nous avons créé deux menus.
+Le premier menu est lancé dès le début du jeu. Il permet de sélectionner certains paramètres et de lancer la partie. A la fin de la partie, un second menu de fin s'affiche. Il permet de relancer une partie en retournant au menu. De la musique est présente dans le menu de base et le menu de fin.
+Ces deux menus sont construits à l'aide de Tkinter afin d'avoir plus de libertés qu'avec Tkiteasy, nottament avec des boutons interractifs par exemple.
 
+Pour plus d'information, on peut consulter la documentation de Tkinter :
+https://docs.python.org/3/library/tkinter.html
 
 ## Identification :
 Dans ce jeu graphique, les éléments ont 2 types d'identité :
