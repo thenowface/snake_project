@@ -172,9 +172,12 @@ Paramètres :
 => fade : durée du fondu d’entrée en millisecondes (transition progressive du silence au volume normal).
 rejouerMusique : permet de rejouer la musique
 stopMusique : permet de stopper la musique
-pauseMusique : met en pause la musique
-unpauseMusique : désactive la pause de la musique
-jouerSon(son, boucles, maxtime, fade) : On utilise pygame.mixer.Sound pour jouer des effets sonores courts de manière rapide et simultanée, sans interrompre 
+
+'pauseMusique()' : met en pause la musique
+
+'unpauseMusique()' : désactive la pause de la musique
+
+'jouerSon(son, boucles, maxtime, fade)' : On utilise pygame.mixer.Sound pour jouer des effets sonores courts de manière rapide et simultanée, sans interrompre 
 la musique de fond.
 Paramètres :
 => son : le son que l'on beut jouer
@@ -185,7 +188,8 @@ Paramètres :
 Pour plus d'information, on peut consulter la [documentation de pygame](https://www.pygame.org/docs/ref/mixer.html)
     
 + Ajout d'une icone et d'un titre pour la fenêtre (lignes 257 à 259) :
-icone_titre(icone,titre) : méthode qui permet de mettre une icone et un titre à la fenêtre de jeu
+
+'icone_titre(icone,titre)' : méthode qui permet de mettre une icone et un titre à la fenêtre de jeu
 Paramètres :
 => icone : fichier de l'image que l'on veut mettre (en format .ico)
 => titre : le titre de la fenêtre
