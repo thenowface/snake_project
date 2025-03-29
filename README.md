@@ -37,12 +37,23 @@ L'élément n est la tête du serpent obtenu grâce à self.objet[-1] à la posi
 Nous avons modifié Tkiteasy afin de faire le projet.
 Ci dessous, vous retrouverez des explications quant à ces modifications.
 
-    • Ajout de la musique (lignes 213 à 224) :
-    Nous avons ajoutée de nouvelles métdodes.
-    chargerMusique : cette méthode initialise le mixer et charge le fichier audio qui est mis en paramètre. On utilise les fonctions de pygame mixer.init() et              mixer.music.load()
-    jouerMusique : cette méthode permet de lancer la musique. On a trois paramètres. boucles, le nombre de fois qu'on rejoue la musique (0 on joue la musique une seule     fois); depart, à partir de quand on commence la musique (en secondes); fade,   
-    On utilise la fonction mixer.music.play()
-    rejouerMusique : cette méthode permet de rejouer la musique.
+    • Ajout de la musique (lignes 213 à 242) :
+    Nous avons ajoutée de nouvelles métdodes à l'aide de Pygame. Nous créons une méthode qui appelle elle même une fonction de Pygame.Plus précisément, nous utilisons
+    le mixer de Pygame. Le mixer de Pygame est un module permettant de gérer le son et la musique, incluant la lecture, le mixage et le contrôle du volume des fichiers
+    audio. Ci dessous, nous faisons une liste des méthodes que nous avons créés.
+    jouerMusique(musique,boucles,depart,fade) : cette méthode permet d'initialiser le mixer, de charger la musique et de la jouer
+    Paramètres :
+    => musique : la musique qu'on rentre, attention, quand on appelle cette fonction il faut penser à ajouter le type du fichier.
+    => boucles : définit le nombre de fois que la musique doit être répétée.
+    => depart : temps (en secondes) à partir duquel la musique commence.
+    => fade : durée du fondu d’entrée en millisecondes (transition progressive du silence au volume normal).
+    rejouerMusique : permet de rejouer la musique
+    stopMusique : permet de stopper la musique
+    pauseMusique : met en pause la musique
+    unpauseMusique : désactive la pause de la musique
+    
+
+    
     Pour plus d'information, on peut consulter la documentation de pygame :
     https://www.pygame.org/docs/ref/music.html
     
