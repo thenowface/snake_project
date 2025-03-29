@@ -160,35 +160,35 @@ Pour plus d'information, on peut consulter la [documentation de Tkinter](https:/
 Nous avons modifié Tkiteasy afin de faire le projet.
 Ci dessous, vous retrouverez des explications quant à ces modifications.
 
-    • Ajout de la musique et du son (lignes 213 à 242) :
-    Nous avons ajoutée de nouvelles métdodes à l'aide de Pygame. Nous créons une méthode qui appelle elle même une fonction de Pygame.Plus précisément, nous utilisons
-    le mixer de Pygame. Le mixer de Pygame est un module permettant de gérer le son et la musique, incluant la lecture, le mixage et le contrôle du volume des fichiers
-    audio. Ci dessous, nous faisons une liste des méthodes que nous avons créés.
-    jouerMusique(musique,boucles,depart,fade) : cette méthode permet d'initialiser le mixer, de charger la musique et de la jouer
-        Paramètres :
-        => musique : la musique qu'on rentre, attention, quand on appelle cette fonction il faut penser à ajouter le type du fichier.
-        => boucles : définit le nombre de fois que la musique doit être répétée. -1 correspond à une lecture infini.
-        => depart : temps (en secondes) à partir duquel la musique commence.
-        => fade : durée du fondu d’entrée en millisecondes (transition progressive du silence au volume normal).
-    rejouerMusique : permet de rejouer la musique
-    stopMusique : permet de stopper la musique
-    pauseMusique : met en pause la musique
-    unpauseMusique : désactive la pause de la musique
-    jouerSon(son, boucles, maxtime, fade) : On utilise pygame.mixer.Sound pour jouer des effets sonores courts de manière rapide et simultanée, sans interrompre 
-    la musique de fond.
-        Paramètres :
-        => son : le son que l'on beut jouer
-        => boucles : nombre de répétitions du son.
-        => maxtime : temps maximal de lecture en millisecondes
-        => fade : durée du fondu d’entrée en millisecondes.
++ Ajout de la musique et du son (lignes 213 à 242) :
+Nous avons ajoutée de nouvelles métdodes à l'aide de Pygame. Nous créons une méthode qui appelle elle même une fonction de Pygame.Plus précisément, nous utilisons
+le mixer de Pygame. Le mixer de Pygame est un module permettant de gérer le son et la musique, incluant la lecture, le mixage et le contrôle du volume des fichiers
+audio. Ci dessous, nous faisons une liste des méthodes que nous avons créés.
+jouerMusique(musique,boucles,depart,fade) : cette méthode permet d'initialiser le mixer, de charger la musique et de la jouer
+Paramètres :
+=> musique : la musique qu'on rentre, attention, quand on appelle cette fonction il faut penser à ajouter le type du fichier.
+=> boucles : définit le nombre de fois que la musique doit être répétée. -1 correspond à une lecture infini.
+=> depart : temps (en secondes) à partir duquel la musique commence.
+=> fade : durée du fondu d’entrée en millisecondes (transition progressive du silence au volume normal).
+rejouerMusique : permet de rejouer la musique
+stopMusique : permet de stopper la musique
+pauseMusique : met en pause la musique
+unpauseMusique : désactive la pause de la musique
+jouerSon(son, boucles, maxtime, fade) : On utilise pygame.mixer.Sound pour jouer des effets sonores courts de manière rapide et simultanée, sans interrompre 
+la musique de fond.
+Paramètres :
+=> son : le son que l'on beut jouer
+=> boucles : nombre de répétitions du son.
+=> maxtime : temps maximal de lecture en millisecondes
+=> fade : durée du fondu d’entrée en millisecondes.
 
-  Pour plus d'information, on peut consulter la [documentation de pygame](https://www.pygame.org/docs/ref/mixer.html)
+Pour plus d'information, on peut consulter la [documentation de pygame](https://www.pygame.org/docs/ref/mixer.html)
     
-    • Ajout d'une icone et d'un titre pour la fenêtre (lignes 257 à 259) :
-    icone_titre(icone,titre) : méthode qui permet de mettre une icone et un titre à la fenêtre de jeu
-        Paramètres :
-        => icone : fichier de l'image que l'on veut mettre (en format .ico)
-        => titre : le titre de la fenêtre
++ Ajout d'une icone et d'un titre pour la fenêtre (lignes 257 à 259) :
+icone_titre(icone,titre) : méthode qui permet de mettre une icone et un titre à la fenêtre de jeu
+Paramètres :
+=> icone : fichier de l'image que l'on veut mettre (en format .ico)
+=> titre : le titre de la fenêtre
 
     
     
