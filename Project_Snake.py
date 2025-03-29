@@ -184,10 +184,6 @@ class Snake():
 
         #Déplacement par rapport au bonus
         depx,depy=bx-sx,by-sy
- 
-        # Si le snake est bloqué on le supprime
-        if not True in [self.canMove(sx,sy-1),self.canMove(sx,sy+1),self.canMove(sx-1,sy),self.canMove(sx+1,sy)]:
-            self.supSnake()
 
         
 
@@ -228,6 +224,11 @@ class Snake():
             else:
                 Snake.jeu[self.nbr_snake]=Snake.key[self.nbr_snake][random.randint(0,3)]
 
+
+        # Si le snake est bloqué on le supprime
+        if not True in [self.canMove(sx,sy-1),self.canMove(sx,sy+1),self.canMove(sx-1,sy),self.canMove(sx+1,sy)]:
+            Snake.jeu[self.nbr_snake]=None
+            self.supSnake()
 
 
 
