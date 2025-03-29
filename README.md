@@ -161,9 +161,11 @@ Nous avons modifié Tkiteasy afin de faire le projet.
 Ci dessous, vous retrouverez des explications quant à ces modifications.
 
 + Ajout de la musique et du son (lignes 213 à 242) :
-Nous avons ajoutée de nouvelles métdodes à l'aide de Pygame. Nous créons une méthode qui appelle elle même une fonction de Pygame. Plus précisément, nous utilisons
-le mixer de Pygame. Le mixer de Pygame est un module permettant de gérer le son et la musique, incluant la lecture, le mixage et le contrôle du volume des fichiers
-audio. Ci dessous, nous faisons une liste des méthodes que nous avons créés.
+
+Nous avons ajoutée de nouvelles métdodes à l'aide de Pygame. Nous créons une méthode qui appelle elle même une fonction de Pygame. 
+Plus précisément, nous utilisons le mixer de Pygame. Le mixer de Pygame est un module permettant de gérer le son et la musique, incluant la lecture, le mixage et le contrôle du volume des fichiers
+audio.
+Ci dessous, nous faisons une liste des méthodes que nous avons créés.
 
 
 `jouerMusique(musique,boucles,depart,fade)` : cette méthode permet d'initialiser le mixer, de charger la musique et de la jouer
