@@ -173,8 +173,7 @@ class Canevas(tk.Canvas):
         self.master.focus_force()
         self.update()
         touche = self.lastkey
-        # La touche ne se remet pas à None pour permettre de garder la dernière touche appuyée
-        #self.lastkey = None
+        self.lastkey = None
         return touche
 
     def attendreTouche(self):
@@ -209,6 +208,10 @@ class Canevas(tk.Canvas):
         if not ido:
             return None
         return ObjetGraphique.annuaire[self.master][ido[-1]]
+    
+
+
+
 ################################################################################
 # AJOUT DE MUSIQUE ET DE SONS AVEC PYGAME
 ################################################################################
@@ -232,11 +235,16 @@ class Canevas(tk.Canvas):
     def unpauseMusique(self):
         pygame.mixer.music.unpause()
 
+    def tempsMusique(self):
+        pygame.mixer.music.get_pos()
+
     #Par là, on gère les sons
 
     def jouerSon(self, son, boucles, maxtime, fade):
         son = pygame.mixer.Sound(son)
         son.play(loops=boucles, maxtime=maxtime, fade_ms=fade)
+
+
 
 ################################################################################
 # AUTRES FONCTIONS
