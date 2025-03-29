@@ -18,14 +18,14 @@ Ce jeu est composé de 3 fichiers :
 ## Identification :
 Dans ce jeu graphique, les éléments ont 2 types d'identité :
 
-    • L'identité par coordonnées :
-        Snake, bonus, murs, peuvent tous être identifiés par leurs coordonnées dans un plan
-        -> mur dans un set pour facilité la recherche rapide
-        Ceci permet ainsi de confronter les coordonnées de murs et des snake / de bonus et des snake
++ L'identité par coordonnées :
+- Snake, bonus, murs, peuvent tous être identifiés par leurs coordonnées dans un plan
+- mur dans un set pour facilité la recherche rapide
+- Ceci permet ainsi de confronter les coordonnées de murs et des snake / de bonus et des snake
 
-    • L'identité par objet graphique :
-        En utilisant des objets graphiques, on peut les déplacer, les supprimer voir les modifier 
-        C'est ici que nous utilisons tkiteasy
++ L'identité par objet graphique :
+- En utilisant des objets graphiques, on peut les déplacer, les supprimer voir les modifier 
+- C'est ici que nous utilisons tkiteasy
 
 
 
