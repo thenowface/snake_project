@@ -7,10 +7,8 @@ Dans le cadre du projet de fin de semestre de la matière Algorithmique 2 de la 
 Ce jeu est composé de 3 fichiers : 
 + `Project_Snake.py`
   - Projet principal comprenant la partie code du jeu 
-
 + `menu.py`
   - Code permettant d'afficher des interfaces graphiques
-
 + `tkiteasy.py`
   - Utilisation de la base [tkiteasy](https://github.com/LaurentMarsan/tkiteasy) produite par [@LaurentMarsan](https://github.com/LaurentMarsan/)
   - Modification multiples. 
@@ -34,16 +32,16 @@ Dans ce jeu graphique, les éléments ont 2 types d'identité :
 
 
 
-## Explication : 
+## Projet_Snake : 
 Le snake est une liste de dimension n+1
 L'élément 0 est la queue du serpent obtenu grâce à self.objet[0] à la position self.Spos[0] : [x,y]
 L'élément n est la tête du serpent obtenu grâce à self.objet[-1] à la position self.Spos[-1] : [x,y]
 
 Étapes pour faire avancer le serpent : 
     
-    • Ajouter la nouvelle tête :
-        - self.Spos.append([x,y]) --> Avec un certain déplacement au voisinnage par 4 avec la variable `dep`
-        - self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0],self.Spos[-1][1],plan.px,plan.px,"red"))   
+	  • Ajouter la nouvelle tête :
+	      - self.Spos.append([x,y]) --> Avec un certain déplacement au voisinnage par 4 avec la variable `dep`
+	      - self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0],self.Spos[-1][1],plan.px,plan.px,"red"))   
     
     --> Regarde si il n'y a pas de bonus 
 
@@ -78,8 +76,7 @@ Ci dessous, vous retrouverez des explications quant à ces modifications.
         => maxtime : temps maximal de lecture en millisecondes
         => fade : durée du fondu d’entrée en millisecondes.
 
-    Pour plus d'information, on peut consulter la documentation de pygame :
-    https://www.pygame.org/docs/ref/mixer.html
+  Pour plus d'information, on peut consulter la [documentation de pygame](https://www.pygame.org/docs/ref/mixer.html)
     
     • Ajout d'une icone et d'un titre pour la fenêtre (lignes 257 à 259) :
     icone_titre(icone,titre) : méthode qui permet de mettre une icone et un titre à la fenêtre de jeu
