@@ -1,4 +1,4 @@
-	# Snake Project
+# Snake Project
 Project L1 Snake
 
 Dans le cadre du projet de fin de semestre de la matière Algorithmique 2 de la double licence Économie-Miashs de TSE, enseignée par Laurent Marsan, nous avons du recréer un jeu snake amélioré, comprenant par exemple des murs et des bonus...
@@ -11,7 +11,9 @@ Ce jeu est composé de 3 fichiers :
   - Code permettant d'afficher des interfaces graphiques
 + `tkiteasy.py`
   - Utilisation de la base [tkiteasy](https://github.com/LaurentMarsan/tkiteasy) produite par [@LaurentMarsan](https://github.com/LaurentMarsan/)
-  - Modification multiples (voir section dédiée).
+  - Modification multiples. 
+
+
 
 ## Identification :
 Dans ce jeu graphique, les éléments ont 2 types d'identité :
@@ -31,31 +33,79 @@ Dans ce jeu graphique, les éléments ont 2 types d'identité :
 
 
 ## Projet_Snake : 
-Le snake est une liste de dimension n+1
-L'élément 0 est la queue du serpent obtenu grâce à self.objet[0] à la position self.Spos[0] : [x,y]
-L'élément n est la tête du serpent obtenu grâce à self.objet[-1] à la position self.Spos[-1] : [x,y]
 
-Étapes pour faire avancer le serpent : 
-    
-	  • Ajouter la nouvelle tête :
-	      - self.Spos.append([x,y]) --> Avec un certain déplacement au voisinnage par 4 avec la variable `dep`
-	      - self.objet.append(plan.g.dessinerRectangle(self.Spos[-1][0],self.Spos[-1][1],plan.px,plan.px,"red"))   
-    
-    --> Regarde si il n'y a pas de bonus 
+### Classe Snake:
+Le snake est une liste de dimension n+1\
+L'élément 0 est la queue du serpent -> position `[0]`\
+L'élément n est la tête du serpent -> position `[-1]`\
 
-    • Retirer la queue : 
-        - self.Spos=self.Spos[1:]
-        - self.objet=selft.objet[1:]
-        - 
-	
-    • méthode canMove(x,y) : 
-    La méthode canMove(self, x, y) vérifie si le serpent peut se déplacer vers la position (x, y). Elle effectue les vérifications suivantes :
-    => Si (x, y) se trouve dans un mur (plan.mur), le mouvement est impossible.
-    => Si la position est occupée par un autre serpent ( Snake.allSnake[i]), le mouvement est également interdit.
-    => Si les coordonnées sont en dehors des limites du plan, le serpent ne peut pas se déplacer.
-    
-    Si l'une de ces conditions est remplie, la méthode appelle self.supSnake() pour supprimer le serpent du jeu (si ce n'est pas une IA) et retourne False. Sinon, elle
-    retourne True, autorisant le mouvement.
+La classe Snake détient plusieurs variables de classe permettant de généraliser des informations\
+Généralisation :Toutes les positons de serpent, touches pressées, touches pressables...\
+
+
++ Génération du snake `__init__()`:
+  - Point aléatoire et on ajoute `size` carrés derrière (avec vérification de ne pas être dans les mur[^1])
+  - Création des objets graphiques stockés dans la liste `self.objet`
+
+
++ Fonction de possibilité de déplacement `canMove()`:
+  - Reçoit un déplacement
+  - Regarde si ce n'est pas dans un mur, dans un snake, ou en dehors des dimensions
+  - Renvoie un booléen d'acceptation du déplacement
+  - Si pas une IA renvoie à la suppression du serpent
+ 
++ Fonction de détection du bonus `isBonus()`:
+  - Prends la position de la tête
+  - Regarde si la tête est sur un bonus :
+    - Renvoie à la fonction de création d'un nouveau bonus
+    - Renvoie un booléen `True` pour signifier le bonus
+    - Initialise les pions spéciaux
+  - Regarde si la tête est sur un pion spécial :
+    - Affecte la vitesse en conséquence
+    - Renvoie un booléen `False` pour signifier rien
+
++ Fonction de recherche de bonus `closestBonus()`:
+  - Reçoit une position de tête
+  - Recherche le bonus le plus proche 
+  - Renvoie la position du bonus le plus proche
+ 
++ Procédure de déplacement IA `moveIA()`:
+  - Reçoit une position
+  - Cherche le bonus le plus proche avec `closestBonus()`
+  - Calcule la distance la plus longue entre abscisses et ordonnées pour la réduire
+  - Affecte le déplacement adéquat ou un déplacement aléatoire si nécéssaire au déplacement à effectuer
+  - Si serpent bloqué -> Mort 
+
++ Procédure de déplacement d'un Snake `deplaceSnake()`:
+  - Reçoit le type de déplacement (bloquant/continu)
+  - Récupère le déplacement à faire (IA ou Touche) 
+  - Regarde si le déplacement est possible avec `canMove()`
+  - Actualise les listes de positions et d'objets
+  - Retire la queue et ajoute une nouvelle tête
+
+ 
++ Procédure de suppresion d'un Snake `supSnake()`:
+  - Supprime carré par carré pour donner un effet visuel
+  - Remet vide les listes de positions et d'objets
+
+
+
+
+### Classe Plan:
+Le snake est une liste de dimension n+1\
+L'élément 0 est la queue du serpent -> position `[0]`\
+L'élément n est la tête du serpent -> position `[-1]`\
+
+La classe Snake détient plusieurs variables de classe permettant de généraliser des informations\
+Généralisation :Toutes les positons de serpent, touches pressées, touches pressables...\
+
+
++ Génération du snake `__init__()`:
+  - Point aléatoire et on ajoute `size` carrés derrière (avec vérification de ne pas être dans les mur[^1])
+  - Création des objets graphiques stockés dans la liste `self.objet`
+
+
+
 
 ## Fonction game
 La fonction game() gère le déroulement du jeu, en créant et en initialisant les éléments nécessaires à la partie, puis en exécutant une boucle de jeu jusqu'à ce que toutes les conditions de fin de partie soient remplies.
