@@ -6,12 +6,12 @@ import pygame.mixer
 def menu():
     #initialisation et lancement de la musique
     pygame.mixer.init()
-    pygame.mixer.music.load("Fortnite.ogg")
+    pygame.mixer.music.load("songs/fortnite.ogg")
     pygame.mixer.music.play(loops=-1, start=0, fade_ms=5)
     #création de la fenêtre principale
     fenetre = Tk()
     fenetre.title("Snake Project")
-    fenetre.iconbitmap("grand_devoreur.ico")
+    fenetre.iconbitmap("pics/grand_devoreur.ico")
     fenetre.config()
     fenetre.geometry("800x700")
 
@@ -32,7 +32,7 @@ def menu():
     Label(fenetre, text="Musique", font=("Helvetica", 14), fg="white").pack()
     ListMu = ["Ninjago", "Geometry Dash"]
     varMu = StringVar(fenetre)
-    varMu.set(ListMu[0])
+    varMu.set(ListMu[1])
     mu = OptionMenu(fenetre, varMu, *ListMu)
     mu.config(width=30, font=("Helvetica", 12))
     mu.pack(pady=10)
@@ -68,10 +68,11 @@ def menu():
             bloc = Checkbutton(frame_options, text="Fonction bloquante", variable=varBloc,command=update_options)
             bloc.pack(pady=20)
 
+            # Si pas fonction bloquante -> possibilité de mettre des IA
             if varBloc.get()==0:
                 Label(frame_options, text="Nombre d'IA", font=("Helvetica", 14), fg="white").pack()
                 ListIA = ["0","1", "2"]
-                varNB.set(ListIA[0])
+                varNB.set(ListIA[1])
                 ia = OptionMenu(frame_options, varNB, *ListIA)
                 ia.config(width=30, font=("Helvetica", 12))
                 ia.pack(pady=10)
@@ -90,11 +91,12 @@ def menu():
     #Choix de la vitesse
     Label(fenetre, text="Vitesse du snake", font=("Helvetica", 14), fg="white").pack()
     varSpeed = IntVar(fenetre)
+    varSpeed.set(4)
     Scala2 = Scale(fenetre, from_=1, to=8, length = 250,tickinterval = 1, orient=HORIZONTAL, sliderlength = 15, variable=varSpeed)
     Scala2.pack(padx=5)
 
-    #Bouton de lancement
 
+    #Bouton de lancement
     start=Button(fenetre,text="Lancer le Jeu",font=("Helvetica", 14),command=fenetre.destroy)
     start.pack(padx=0, pady=40)
 
@@ -110,7 +112,7 @@ def menu():
     close.pack(padx=0, pady=0)
 
 
-    #Lier la fonction à tout changement de mode de jeu
+    # Lier la fonction à tout changement de mode de jeu
     nombre = varMo.trace("w", update_options)
     update_options()
 
@@ -126,14 +128,22 @@ def menu():
 
 
 
+def music_over():
+    #initialisation et lancement de la musique de fin
+    pygame.mixer.init()
+    pygame.mixer.music.load("songs/game_over.ogg")
+    pygame.mixer.music.play(loops=-1, start=0, fade_ms=1)
+
 
 
 def end(number_size):
     name=["Alain Berro","Laurent Marsan","Bénédicte Alziary"]
-    #initialisation et lancement de la musique de fin
+
+    #initialisation et lancement de la musique
     pygame.mixer.init()
-    pygame.mixer.music.load("game_over.ogg")
-    pygame.mixer.music.play(loops=-1, start=0, fade_ms=1)
+    pygame.mixer.music.load("songs/fortnite.ogg")
+    pygame.mixer.music.play(loops=-1, start=0, fade_ms=5)
+    
     #création de la fenêtre principale
     finish = Tk()
     finish.title("Snake Project")
@@ -145,6 +155,7 @@ def end(number_size):
     titre = Label(finish, text="* Jeu Perdu *", font=("Helvetica", 60, "bold"), fg="red")
     titre.pack(pady=20)
 
+    # Affichage des scores
     titre2 = Label(finish, text="Voici les scores :", font=("Helvetica", 30, "bold"), fg="green")
     titre2.pack(pady=5)
 
@@ -154,6 +165,8 @@ def end(number_size):
 
     varJeu=[0]
 
+
+    # Fonction à appeler lorsque le jeu est fini
     def finit(value):
         varJeu[0]=value
         finish.destroy()
@@ -171,6 +184,3 @@ def end(number_size):
     finish.mainloop()
 
     return varJeu[0]
-
-# print(menu())
-# print(end([5,6]))
