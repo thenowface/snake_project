@@ -5,11 +5,16 @@ Dans le cadre du projet de fin de semestre de la matière Algorithmique 2 de la 
 
 ## Fichiers 
 Ce jeu est composé de 3 fichiers : 
-+ **Project_Snake**
++ `Project_Snake.py`
   - Projet principal comprenant la partie code du jeu 
 
-+ **menu**
++ `menu.py`
   - Code permettant d'afficher des interfaces graphiques
+
++ `tkiteasy.py`
+  - Utilisation de la base [tkiteasy](https://github.com/LaurentMarsan/tkiteasy) produite par [@LaurentMarsan](https://github.com/LaurentMarsan/)
+  - Modification multiples. 
+
 
 
 ## Identification :
