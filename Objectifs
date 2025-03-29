@@ -1,4 +1,6 @@
-# Objectifs :
+Objectifs :
+
+(##) => Objectif valdidé
 
 ##- Changer les murs en sets une fois créés##
 
@@ -6,23 +8,23 @@
   ##• Pion qui fait augmenter la vitesse pendant x secondes##
   ##• Pion qui fait diminuer la vitesse pendant x secondes##
 
-- Mettre de la musique 
+- Mettre de la musique
   • Son quand le snake attrape un pion 
-  • Son quand le snake touche un mur/bord
-  • Musique d'ambiance plus ou moins épique 
+  ##• Son quand le snake touche un mur/bord##
+  ##• Musique d'ambiance plus ou moins épique##
     - "Vous avez perdu" par Alain Berro
     - "Siouplaît" quand le pion accélère 
   • Augmenter le son lorsque accélération
 
 - Mode autonome
-  • Atteindre des points 
+  ##• Atteindre des points## 
   • Bloquer le snake joueur
 
 - Interface graphique 
   ##• Menu pour selectionner des paramètres##
     ##- Selection du nombre de carreaux## 
     ##- Selection du mode (solo / multi / ordi)##
-    ##- Vitesse (vitesse normale / vitesse qui évolue)##
+    ##- Vitesse ##
     ##- Sélection de la musique##
   ??? • Voir comment selectionner un fichier de murs 
 
@@ -35,8 +37,9 @@
 
 - Comptage des points 
   • Fichier qui compte les scores : classement par date
+  ##• Afficher les scores à la fin##
 
 - Stop du jeu 
   • coder la touche échap
-  • Lorsque le joueur est mort -> ouvre une fenetre avec le score + si il veut rejouder 
-    - S'il veut rejouer renvoie la fenetre de début 
+  ##• Lorsque le joueur est mort -> ouvre une fenetre avec le score + si il veut rejouder 
+    - S'il veut rejouer renvoie la fenetre de début##
