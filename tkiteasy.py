@@ -232,9 +232,6 @@ class Canevas(tk.Canvas):
     def unpauseMusique(self):
         pygame.mixer.music.unpause()
 
-    def tempsMusique(self):
-        pygame.mixer.music.get_pos()
-
     #Par là, on gère les sons
 
     def jouerSon(self, son, boucles, maxtime, fade):
