@@ -11,7 +11,7 @@ Ce jeu est composé de 3 fichiers :
   - Code permettant d'afficher des interfaces graphiques
 + `tkiteasy.py`
   - Utilisation de la base [tkiteasy](https://github.com/LaurentMarsan/tkiteasy) produite par [@LaurentMarsan](https://github.com/LaurentMarsan/)
-  - Modification multiples. 
+  - Modification multiples (voir section dédiée).
 
 ## Identification :
 Dans ce jeu graphique, les éléments ont 2 types d'identité :
