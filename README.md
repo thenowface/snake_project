@@ -135,7 +135,7 @@ La classe Plan permet de créer une structure sur laquelle joueur et est appelé
 
 
 ## Fonction game
-La fonction `game()` gère le déroulement du jeu, en créant et en initialisant les éléments nécessaires à la partie, puis en exécutant une boucle de jeu jusqu'à ce que toutes les conditions de fin de partie soient remplies.
+La fonction `game()` gère le déroulement du jeu, en créant et en initialisant les éléments nécessaires à la partie, puis en exécutant une boucle de jeu jusqu'à ce que toutes les conditions de fin de partie soient remplies. On utilise glogal ici pour faciliter l'utilisation de l'objet Plan.
 
 + Initialisation des paramètres :
 
