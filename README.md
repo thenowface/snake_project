@@ -172,13 +172,13 @@ Ci dessous, nous faisons une liste des méthodes que nous avons créés.
 
   Paramètres :
   
-  => musique : la musique qu'on rentre, attention, quand on appelle cette fonction il faut penser à ajouter le type du fichier.
+- musique : la musique qu'on rentre, attention, quand on appelle cette fonction il faut penser à ajouter le type du fichier.
   
-  => boucles : définit le nombre de fois que la musique doit être répétée. -1 correspond à une lecture infini.
+- boucles : définit le nombre de fois que la musique doit être répétée. -1 correspond à une lecture infini.
   
-  => depart : temps (en secondes) à partir duquel la musique commence.
+- depart : temps (en secondes) à partir duquel la musique commence.
   
-  => fade : durée du fondu d’entrée en millisecondes (transition progressive du silence au volume normal).
+- fade : durée du fondu d’entrée en millisecondes (transition progressive du silence au volume normal).
 
 
 `rejouerMusique()` : permet de rejouer la musique
@@ -198,13 +198,13 @@ la musique de fond.
 
   Paramètres :
   
-  => son : le son que l'on beut jouer
+- son : le son que l'on beut jouer
   
-  => boucles : nombre de répétitions du son.
+- boucles : nombre de répétitions du son.
   
-  => maxtime : temps maximal de lecture en millisecondes
+- maxtime : temps maximal de lecture en millisecondes
   
-  => fade : durée du fondu d’entrée en millisecondes.
+- fade : durée du fondu d’entrée en millisecondes.
 
 
 Pour plus d'information, on peut consulter la [documentation de pygame](https://www.pygame.org/docs/ref/mixer.html)
@@ -213,11 +213,11 @@ Pour plus d'information, on peut consulter la [documentation de pygame](https://
 
 `icone_titre(icone,titre)` : méthode qui permet de mettre une icone et un titre à la fenêtre de jeu
   
-  Paramètres :
+Paramètres :
   
-  => icone : fichier de l'image que l'on veut mettre (en format .ico)
+- icone : fichier de l'image que l'on veut mettre (en format .ico)
   
-  => titre : le titre de la fenêtre
+- titre : le titre de la fenêtre
 
     
     
