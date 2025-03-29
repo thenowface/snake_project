@@ -1,16 +1,30 @@
 # Snake Project
 Project L1 Snake
 
+Dans le cadre du projet de fin de semestre de la matière Algorithmique 2 de la double licence Économie-Miashs de TSE, enseignée par Laurent Marsan, nous avons du recréer un jeu snake amélioré, comprenant par exemple des murs et des bonus...
+
+## Fichiers 
+Ce jeu est composé de 3 fichiers : 
++ **Project_Snake**
+  - Projet principal comprenant la partie code du jeu 
+
++ **menu**
+  - Code permettant d'afficher des interfaces graphiques
+
+
 ## Identification :
 Dans ce jeu graphique, les éléments ont 2 types d'identité :
 
     • L'identité par coordonnées :
-        Snake, bonus, murs, peuvent tous être identifiés par leurs coordonnées dans un plan 
-        Ceci permet ainsi de confronter les coordonnées de murs et du snake / de bonus et du snake
+        Snake, bonus, murs, peuvent tous être identifiés par leurs coordonnées dans un plan
+        -> mur dans un set pour facilité la recherche rapide
+        Ceci permet ainsi de confronter les coordonnées de murs et des snake / de bonus et des snake
 
     • L'identité par objet graphique :
         En utilisant des objets graphiques, on peut les déplacer, les supprimer voir les modifier 
         C'est ici que nous utilisons tkiteasy
+
+
 
 
 
