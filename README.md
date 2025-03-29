@@ -13,14 +13,6 @@ Ce jeu est composé de 3 fichiers :
   - Utilisation de la base [tkiteasy](https://github.com/LaurentMarsan/tkiteasy) produite par [@LaurentMarsan](https://github.com/LaurentMarsan/)
   - Modification multiples. 
 
-## Menus
-Nous avons créé deux menus.
-Le premier menu est lancé dès le début du jeu. Il permet de sélectionner certains paramètres et de lancer la partie. A la fin de la partie, un second menu de fin s'affiche. Il permet de relancer une partie en retournant au menu. De la musique est présente dans le menu de base et le menu de fin.
-Ces deux menus sont construits à l'aide de Tkinter afin d'avoir plus de libertés qu'avec Tkiteasy, nottament avec des boutons interractifs par exemple.
-
-Pour plus d'information, on peut consulter la documentation de Tkinter :
-https://docs.python.org/3/library/tkinter.html
-
 ## Identification :
 Dans ce jeu graphique, les éléments ont 2 types d'identité :
 
@@ -55,6 +47,13 @@ L'élément n est la tête du serpent obtenu grâce à self.objet[-1] à la posi
         - self.Spos=self.Spos[1:]
         - self.objet=selft.objet[1:]
         - 
+
+## Menus
+Nous avons créé deux menus.
+Le premier menu est lancé dès le début du jeu. Il permet de sélectionner certains paramètres et de lancer la partie. A la fin de la partie, un second menu de fin s'affiche. Il permet de relancer une partie en retournant au menu. De la musique est présente dans le menu de base et le menu de fin.
+Ces deux menus sont construits à l'aide de Tkinter afin d'avoir plus de libertés qu'avec Tkiteasy, nottament avec des boutons interractifs par exemple.
+
+Pour plus d'information, on peut consulter la [documentation de Tkinter](https://docs.python.org/3/library/tkinter.html)
 
 ## Modification Tkiteasy :
 Nous avons modifié Tkiteasy afin de faire le projet.
