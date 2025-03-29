@@ -42,18 +42,20 @@ Ci dessous, vous retrouverez des explications quant à ces modifications.
     le mixer de Pygame. Le mixer de Pygame est un module permettant de gérer le son et la musique, incluant la lecture, le mixage et le contrôle du volume des fichiers
     audio. Ci dessous, nous faisons une liste des méthodes que nous avons créés.
     jouerMusique(musique,boucles,depart,fade) : cette méthode permet d'initialiser le mixer, de charger la musique et de la jouer
-    Paramètres :
-    => musique : la musique qu'on rentre, attention, quand on appelle cette fonction il faut penser à ajouter le type du fichier.
-    => boucles : définit le nombre de fois que la musique doit être répétée.
-    => depart : temps (en secondes) à partir duquel la musique commence.
-    => fade : durée du fondu d’entrée en millisecondes (transition progressive du silence au volume normal).
+        Paramètres :
+        => musique : la musique qu'on rentre, attention, quand on appelle cette fonction il faut penser à ajouter le type du fichier.
+        => boucles : définit le nombre de fois que la musique doit être répétée. -1 correspond à une lecture infini.
+        => depart : temps (en secondes) à partir duquel la musique commence.
+        => fade : durée du fondu d’entrée en millisecondes (transition progressive du silence au volume normal).
     rejouerMusique : permet de rejouer la musique
     stopMusique : permet de stopper la musique
     pauseMusique : met en pause la musique
     unpauseMusique : désactive la pause de la musique
-    
-
-    
+    jouerSon(son, boucles, maxtime, fade) : On utilise pygame.mixer.Sound pour jouer des effets sonores courts de manière rapide et simultanée, sans interrompre 
+    la musique de fond.
+        Paramètres :
+        => son : le son que l'on beut jouer
+        
     Pour plus d'information, on peut consulter la documentation de pygame :
     https://www.pygame.org/docs/ref/music.html
     
