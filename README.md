@@ -92,17 +92,44 @@ Généralisation :Toutes les positons de serpent, touches pressées, touches pre
 
 
 ### Classe Plan:
-Le snake est une liste de dimension n+1\
-L'élément 0 est la queue du serpent -> position `[0]`\
-L'élément n est la tête du serpent -> position `[-1]`\
 
-La classe Snake détient plusieurs variables de classe permettant de généraliser des informations\
-Généralisation :Toutes les positons de serpent, touches pressées, touches pressables...\
+La classe Plan permet de créer une structure sur laquelle joueur et est appelée dans la fonction `game()`\
 
 
-+ Génération du snake `__init__()`:
-  - Point aléatoire et on ajoute `size` carrés derrière (avec vérification de ne pas être dans les mur[^1])
-  - Création des objets graphiques stockés dans la liste `self.objet`
++ Initiatlisation du plan `__init__()`:
+  - Initialisation des variables de la classe `Snake()` pour pouvoir jouer
+  - Initialisation des listes objets/positions pour tous les types de bonus
+  - Ouverture d'une fenetre avec `tkiteasy` 
+
+ 
++ Procédure d'affichage des murs `wall()`:
+  - Prends un point aléatoire
+  - Choisis un nombre de déplacement aléatoire
+  - Choisis une direction aléatoire et crée des paterns de murs
+  - Actulise la liste position et la transforme en set pour la rapidité de recherche
+
+ 
++ Procédure d'affichage des bonus `initBonus()`:
+  - Crée des positions au hasard
+  - Vérifie qu'ils ne sont pas dans un mur
+  - Crée des objets graphiques sur ces positions
+ 
+ 
++ Procédure de nouveau bonus `moveBonus()`:
+  - Reçoit les coordonnées du bonus mangé
+  - Supprime graphiquement et intérieurement le bonus
+  - En crée un autre
+ 
+ 
++ Procédure d'ajout de points spéciaux `initSpoint()`:
+  - Reçoit le type de point (Accélérateur/Ralentisseur)
+  - Même procédure que `initBonus()` : on regarde si la case est dispo et on met un point
+
++ Procédure de nouveau point spécial `moveSpoint()`:
+  - Reçoit les coordonnées et le type du point mangé
+  - Supprime graphiquement et intérieurement le point
+
+
 
 
 
